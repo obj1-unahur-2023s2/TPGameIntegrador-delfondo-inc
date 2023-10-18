@@ -1,0 +1,15 @@
+import wollok.game.*
+import elementos.*
+
+program miPrimerWollokGame {
+	const nivel1 = new Nivel()
+	
+	game.width(17)
+	game.height(12)
+	game.boardGround("empedrado.jpg")
+	game.addVisualCharacter(auto)
+	
+	keyboard.t().onPressDo({nivel1.construirNivel(nivel1.posicionesNivel1())})
+	
+	game.start()
+}
