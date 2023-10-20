@@ -6,7 +6,7 @@
 (completar nombres formales)
 
 - Herrera Erik 
-- Tabaka Luka 
+- Tabaka Luca 
 - Di Pietro Leandro 
 - Nuñez Ariel 
 - Calderon Carlos
