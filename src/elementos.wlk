@@ -5,31 +5,43 @@ object auto {
 	var property image = "autitoRojo.png"
 }
 
-class Pared {
-	const image = "paredLadrillos3.jpg"
+object corazon
+{
+	var cerrado = true
 	
-	method image() = image
+	method image() = if(cerrado) "" else ""
+	method abrir(){ cerrado = false }
 }
 
-class Nivel {
-	const posicionesNivel1 = [[0,0],[0,1],[0,2],[0,3],[0,4],[0,5],[0,6],[0,7],[0,8],[0,9],[0,10],[0,11],[1,11],[2,11]] // [X,Y]
-	const posicionesNivel2 = [[0,0],[0,1],[0,2],[0,3]]
+class Pared {
+	method image() = "ladrilloPrueba.png"
+}
+
+class Personaje{
+	var position = game.at(x,y)
+	var x
+	var y
 	
-	method posicionesNivel1() = posicionesNivel1
+	method position() = position
 	
-	method posicionX(registro) = registro.first()
-	method posicionY(registro) = registro.last()
-	method agregarPared(ubicacion){
-		game.addVisualIn(new Pared(), game.at(self.posicionX(ubicacion),self.posicionY(ubicacion)))
+	method pasoArriba(){
+		position = position.up(1)
 	}
-	method construirNivel(nivel){
-		nivel.forEach({ubicacion=>self.agregarPared(ubicacion)})
+	
+	method pasoDerecha(){
+		position = position.right(1)
+	}
+	
+	method pasoAbajo(){
+		position = position.down(1)
+	}
+	
+	method pasoIzquierda(){
+		position = position.left(1)
 	}
 }
-/* 
-	method construirNivel(nivel){
- 	nivel.forEach({
- 		e=>e.addVisualIn(new Pared(), game.at(e.first(),e.last()))})}
- 	}
-*/
+
+class Telarana {
+	
+}
  
