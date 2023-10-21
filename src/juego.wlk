@@ -1,9 +1,9 @@
 import elementos.*
 import wollok.game.*
 import interface.*
+import sonido.*
 
-object juego
-{
+object juego {
 	method start(){
 		self.cargarPantalla()
 		self.cargarPersonajes()
@@ -24,12 +24,14 @@ object juego
 		game.addVisualCharacter(auto)
 	}
 	
-	method cargarColisiones(){
-		
-	}
+	method cargarColisiones() {}
 	
 	method cargarControles(){
 		const nivel1 = new Nivel()
-		keyboard.t().onPressDo({nivel1.construirNivel(nivel1.posicionesNivel1())})
+		keyboard.t().onPressDo({nivel1.construirNivel(nivel1.posicionesNivel1())}) // Temporal
+		keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
+		keyboard.u().onPressDo({gestorDeSonido.alternar("daño.ogg")}) // Temporal
+		keyboard.i().onPressDo({gestorDeSonido.alternar("rebote.ogg")})
+		keyboard.p().onPressDo({gestorDeSonido.pausar()})
 	}
 }

@@ -5,8 +5,7 @@ object auto {
 	var property image = "autitoRojo.png"
 }
 
-object corazon
-{
+object corazon {
 	var cerrado = true
 	
 	method image() = if(cerrado) "" else ""
@@ -17,7 +16,7 @@ class Pared {
 	method image() = "ladrilloPrueba.png"
 }
 
-class Personaje{
+class Personaje {
 	var position = game.at(x,y)
 	var x
 	var y
@@ -41,7 +40,5 @@ class Personaje{
 	}
 }
 
-class Telarana {
-	
-}
+class Telarana {}
  

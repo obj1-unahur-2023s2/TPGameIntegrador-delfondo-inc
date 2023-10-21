@@ -1,8 +1,7 @@
 import wollok.game.*
 import elementos.*
 
-object interface 
-{
+object interface {
 	method image(){}
 	method position(){}
 	
@@ -11,8 +10,7 @@ object interface
 	}
 }
 
-class Menu
-{
+class Menu {
 	method image(){}
 	method position(){}
 }
@@ -32,9 +30,3 @@ class Nivel {
 		nivel.forEach({ubicacion=>self.agregarPared(ubicacion)})
 	}
 }
-/* 
-	method construirNivel(nivel){
- 	nivel.forEach({
- 		e=>e.addVisualIn(new Pared(), game.at(e.first(),e.last()))})}
- 	}
-*/

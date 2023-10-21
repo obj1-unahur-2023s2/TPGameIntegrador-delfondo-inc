@@ -2,8 +2,7 @@ import wollok.game.*
 import elementos.*
 import juego.*
 
-program binaryLand
-{
+program binaryLand {
 	juego.start()
 	game.start()
 }
