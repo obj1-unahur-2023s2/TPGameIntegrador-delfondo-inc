@@ -1,52 +1,81 @@
 import wollok.game.*
 import movimientos.*
 
-class Personaje {}
+class Personaje {
+	var position = game.at(x,y)
+	var direccion = arriba
+	var x
+	var y
+	
+	method position() = position
+	
+	method pasoArriba(){
+		position = position.up(1)
+	}
+	
+	method pasoDerecha(){
+		position = position.right(1)
+	}
+	
+	method pasoAbajo(){
+		position = position.down(1)
+	}
+	
+	method pasoIzquierda(){
+		position = position.left(1)
+	}
+	method hayObjetosEn(pos) = game.getObjectsIn(pos).size() > 0
+}
 
 class Pinguino inherits Personaje {
-	var property position
-	var property image = "pinguino" + direccion.toString() + ".png"
-	var direccion = arriba
-	var esPersonaje = false
+	const color
+	var property esPersonaje
+
+	method image() = "pinguino" + color + direccion.toString() + ".png"
 	
-	method subir() {
+	override method pasoArriba() {
 		direccion = arriba
 		self.errorSiHayObjAl(direccion.siguiente())
-		position.up(1)
+		super()
 	}
-	method bajar() {
-		self.errorSiHayObjAl(position.get(1) + 1)
-		position.down(1)
+	override method pasoAbajo() {
+		direccion = abajo
+		self.errorSiHayObjAl(direccion.siguiente())
+		super()
 	}
-	method moverDer() {
+	override method pasoDerecha() {
 		if(esPersonaje) {
-			self.errorSiHayObjAl(position.get(0) + 1)
+			direccion = derecha
+			self.errorSiHayObjAl(direccion.siguiente())
 			position.right(1)
 		}
 		else {
-			self.errorSiHayObjAl(position.get(0) - 1)
+			direccion = izquierda
+			self.errorSiHayObjAl(direccion.siguiente())
 			position.left(1)
 		}
 	}
-	method moverIzq() {
+	override method pasoIzquierda() {
 		if(esPersonaje) {
-			self.errorSiHayObjAl(position.get(0) - 1)
+			direccion = izquierda
+			self.errorSiHayObjAl(direccion.siguiente())
 			position.left(1)
 		}
 		else {
-			self.errorSiHayObjAl(position.get(0) + 1)
+			direccion = derecha
+			self.errorSiHayObjAl(direccion.siguiente())
 			position.right(1)
 		}
 	}
-	method esPersonaje() = esPersonaje
-	
-	method volverPersonaje() {
-		esPersonaje = true
-	}
+
 	method errorSiHayObjAl(pos) {
 		if(self.hayObjetosEn(pos)) {
 			throw new Exception(message = "No puedo moverme en esa direccion")
 		}
 	}
-	method hayObjetosEn(pos) = game.getObjectsIn(pos).size() > 0
+	
+}
+
+class Arania inherits Personaje {
+	
 }
