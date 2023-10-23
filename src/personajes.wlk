@@ -2,68 +2,68 @@ import wollok.game.*
 import movimientos.*
 
 class Personaje {
-	var position = game.at(x,y)
-	var direccion = arriba
-	var x
-	var y
+	var position
+	var direccion
+	
+	method direccion() = direccion
 	
 	method position() = position
 	
 	method pasoArriba(){
-		position = position.up(1)
+		position = direccion.siguiente(position)
 	}
 	
 	method pasoDerecha(){
-		position = position.right(1)
+		position = direccion.siguiente(position)
 	}
 	
 	method pasoAbajo(){
-		position = position.down(1)
+		position = direccion.siguiente(position)
 	}
 	
 	method pasoIzquierda(){
-		position = position.left(1)
+		position = direccion.siguiente(position)
 	}
 	method hayObjetosEn(pos) = game.getObjectsIn(pos).size() > 0
 }
 
 class Pinguino inherits Personaje {
 	const color
-	var property esPersonaje
-
+	var esPersonaje
+	
 	method image() = "pinguino" + color + direccion.toString() + ".png"
 	
 	override method pasoArriba() {
 		direccion = arriba
-		self.errorSiHayObjAl(direccion.siguiente())
+		self.errorSiHayObjAl(direccion.siguiente(position))
 		super()
 	}
 	override method pasoAbajo() {
 		direccion = abajo
-		self.errorSiHayObjAl(direccion.siguiente())
+		self.errorSiHayObjAl(direccion.siguiente(position))
 		super()
 	}
 	override method pasoDerecha() {
 		if(esPersonaje) {
 			direccion = derecha
-			self.errorSiHayObjAl(direccion.siguiente())
+			self.errorSiHayObjAl(direccion.siguiente(position))
 			position.right(1)
 		}
 		else {
 			direccion = izquierda
-			self.errorSiHayObjAl(direccion.siguiente())
+			self.errorSiHayObjAl(direccion.siguiente(position))
 			position.left(1)
 		}
 	}
 	override method pasoIzquierda() {
 		if(esPersonaje) {
 			direccion = izquierda
-			self.errorSiHayObjAl(direccion.siguiente())
+			self.errorSiHayObjAl(direccion.siguiente(position))
 			position.left(1)
 		}
 		else {
 			direccion = derecha
-			self.errorSiHayObjAl(direccion.siguiente())
+			self.errorSiHayObjAl(direccion.siguiente(position))
 			position.right(1)
 		}
 	}
@@ -75,6 +75,7 @@ class Pinguino inherits Personaje {
 	}
 	
 }
+
 
 class Arania inherits Personaje {
 	
