@@ -16,29 +16,5 @@ class Pared {
 	method image() = "ladrilloPrueba.png"
 }
 
-class Personaje {
-	var position = game.at(x,y)
-	var x
-	var y
-	
-	method position() = position
-	
-	method pasoArriba(){
-		position = position.up(1)
-	}
-	
-	method pasoDerecha(){
-		position = position.right(1)
-	}
-	
-	method pasoAbajo(){
-		position = position.down(1)
-	}
-	
-	method pasoIzquierda(){
-		position = position.left(1)
-	}
-}
-
 class Telarana {}
  
