@@ -9,6 +9,14 @@ class Personaje {
 	
 	method position() = position
 	
+	//Metodos de movimientos parametrizados
+	
+	method pasoEnX(direccionX)
+	
+	method pasoEnY(direccionY)
+	
+	//Por ahora esto está comentado
+	/*
 	method pasoArriba(){
 		position = direccion.siguiente(position)
 	}
@@ -24,57 +32,92 @@ class Personaje {
 	method pasoIzquierda(){
 		position = direccion.siguiente(position)
 	}
-	method hayObjetosEn(pos) = game.getObjectsIn(pos).size() > 0
+	*/
+	
+	//Para validar en las colisiones
+	method puedePisarte(_)
+	//method hayObjetosEn(pos) = game.getObjectsIn(pos).size() > 0
 }
 
 class Pinguino inherits Personaje {
 	const color
-	var esPersonaje
+	var property esPersonaje
 	
 	method image() = "pinguino" + color + direccion.toString() + ".png"
 	
+	
+	// Esto es para que los pinguinos se puedan traspasar entre sí.
+	override method puedePisarte(_) = true
+	
+	
+	// Movimientos parametrizados.
+	override method pasoEnX(direccionX) {
+		if(esPersonaje) {
+			direccion = direccionX
+			self.validarLugarLibre(direccion.siguiente(position))
+		}
+		else {
+			direccion = direccionX.opuesto()
+			self.validarLugarLibre(direccion.siguiente(position))
+		}
+		position = direccion.siguiente(position)
+	}
+	
+	override method pasoEnY(direccionY) {
+		direccion = direccionY
+		self.validarLugarLibre(direccion.siguiente(position))
+		position = direccion.siguiente(position)
+	}
+	
+	//Esto también queda cometnado por ahora
+	/*
 	override method pasoArriba() {
 		direccion = arriba
-		self.errorSiHayObjAl(direccion.siguiente(position))
+		self.validarLugarLibre(direccion.siguiente(position))
 		super()
 	}
 	override method pasoAbajo() {
 		direccion = abajo
-		self.errorSiHayObjAl(direccion.siguiente(position))
+		self.validarLugarLibre(direccion.siguiente(position))
 		super()
 	}
 	override method pasoDerecha() {
 		if(esPersonaje) {
 			direccion = derecha
-			self.errorSiHayObjAl(direccion.siguiente(position))
-			position.right(1)
+			self.validarLugarLibre(direccion.siguiente(position))
+			super()
 		}
 		else {
 			direccion = izquierda
-			self.errorSiHayObjAl(direccion.siguiente(position))
-			position.left(1)
+			self.validarLugarLibre(direccion.siguiente(position))
+			super()
 		}
 	}
 	override method pasoIzquierda() {
 		if(esPersonaje) {
 			direccion = izquierda
-			self.errorSiHayObjAl(direccion.siguiente(position))
-			position.left(1)
+			self.validarLugarLibre(direccion.siguiente(position))
+			super()
 		}
 		else {
 			direccion = derecha
-			self.errorSiHayObjAl(direccion.siguiente(position))
-			position.right(1)
+			self.validarLugarLibre(direccion.siguiente(position))
+			super()
 		}
 	}
-
-	method errorSiHayObjAl(pos) {
-		if(self.hayObjetosEn(pos)) {
-			throw new Exception(message = "No puedo moverme en esa direccion")
-		}
+	*/
+	
+	//Método para validaciones
+	method validarLugarLibre(direccion) {
+		const lugarLibre = game.getObjectsIn(direccion)
+			.all{ obj => obj.puedePisarte(self) } 
+		
+		if (!lugarLibre) 
+			self.error("No puedo ir para ese lado")
 	}
 	
 }
+
 
 
 class Arania inherits Personaje {
