@@ -32,9 +32,7 @@ object juego {
 		//interface.cargarNivel(inicial)
 	}
 	
-	method cargarPersonajes(){
-		game.addVisualCharacter(auto)
-	}
+	method cargarPersonajes() {}
 	
 	method cargarColisiones() {}
 	
@@ -65,5 +63,47 @@ object juego {
 		catch e {
 			seleccionado.pasoEnY(direccionY)
 		}
+	}
+	method realizarAtaques() {
+		self.animarGolpePinguinos()
+		self.accionarGolpes()
+		self.desanimarPinguinos()
+	}
+	method accionarGolpes() {
+		const golpe1 = new Golpe(position=self.posicionarGolpePinguino(seleccionado),direccion=seleccionado.direccion())
+		const golpe2 = new Golpe(position=self.posicionarGolpePinguino(pinguinoRosa),direccion=pinguinoRosa.direccion())
+		game.addVisual(golpe1)
+		game.addVisual(golpe2)
+		self.animarGolpePinguinos()
+		#{golpe1,golpe2}.forEach({g => g.eliminarEnemigos()})
+		self.removerGolpes(golpe1,golpe2)
+		self.desanimarPinguinos()
+	}
+	
+	//Golpes pinguinos
+	method animarGolpePinguinos() {
+		seleccionado.estado("Pegando")
+		pinguinoRosa.estado("Pegando")
+	}
+	
+	method posicionarGolpePinguino(pinguino) {
+		return if(pinguino.direccion().toString() == "arriba") {
+			game.at(pinguino.position().x(), pinguino.position().y() + 1) 
+		}
+		else if(pinguino.direccion().toString() == "abajo"){
+			game.at(pinguino.position().x(), pinguino.position().y() - 1) 
+		}
+		else if(pinguino.direccion().toString() == "derecha") {
+			game.at(pinguino.position().x() + 1, pinguino.position().y()) 
+		}
+		else {
+			game.at(pinguino.position().x() - 1, pinguino.position().y()) 
+		}
+	}
+	method removerGolpes(golpe1,golpe2) {
+		game.schedule(200, {=> game.removeVisual(golpe1) game.removeVisual(golpe2)})
+	}
+	method desanimarPinguinos() {
+		game.schedule(200,{=> seleccionado.estado("Moviendo") pinguinoRosa.estado("Moviendo")})
 	}
 }

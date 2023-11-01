@@ -1,5 +1,6 @@
 import wollok.game.*
 import movimientos.*
+import elementos.*
 
 class Personaje {
 	var position
@@ -41,6 +42,7 @@ class Personaje {
 
 class Pinguino inherits Personaje {
 	const color
+	var property estado = "Parado"
 	var property esPersonaje
 	
 	method image() = "pinguino" + color + direccion.toString() + ".png"
@@ -60,12 +62,14 @@ class Pinguino inherits Personaje {
 			direccion = direccionX.opuesto()
 			self.validarLugarLibre(direccion.siguiente(position))
 		}
+		estado = "Moviendo"
 		position = direccion.siguiente(position)
 	}
 	
 	override method pasoEnY(direccionY) {
 		direccion = direccionY
 		self.validarLugarLibre(direccion.siguiente(position))
+		estado = "Moviendo"
 		position = direccion.siguiente(position)
 	}
 	

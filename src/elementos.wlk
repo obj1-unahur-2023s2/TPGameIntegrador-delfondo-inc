@@ -1,9 +1,5 @@
 import wollok.game.*
-
-object auto {
-	var property position = game.at(0,0)
-	var property image = "autitoRojo.png"
-}
+import personajes.*
 
 object corazon {
 	var cerrado = true
@@ -17,4 +13,15 @@ class Pared {
 }
 
 class Telarana {}
- 
+ //Las instancias de los golpes de los pinguinos
+class Golpe {
+	const property position
+	const direccion
+	method image() = "golpe" + direccion.toString() + ".png"
+	method esEnemigo() = false
+	method puedePisarte(_) = true
+	method eliminarEnemigos() {
+		const objetosEnemigos = game.getObjectsIn(position).filter({o => o.esEnemigo()})
+		objetosEnemigos.forEach({e => game.removeVisual(e)})
+	}
+}

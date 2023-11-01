@@ -10,6 +10,7 @@ object controles {
 		keyboard.d().onPressDo({juego.moverPinguinosEnX(derecha)})
 		keyboard.s().onPressDo({juego.moverPinguinosEnY(abajo)})
 		keyboard.a().onPressDo({juego.moverPinguinosEnX(izquierda)})
+		keyboard.space().onPressDo({juego.realizarAtaques()})
 	}
 }
 	
