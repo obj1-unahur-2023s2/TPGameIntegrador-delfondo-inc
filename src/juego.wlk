@@ -37,8 +37,8 @@ object juego {
 	method cargarColisiones() {}
 	
 	method cargarControles(){
-		const nivel1 = new Nivel()
-		keyboard.t().onPressDo({nivel1.construirNivel(nivel1.posicionesNivel1())}) // Temporal
+		const nivel = new Nivel()
+		keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) // Temporal
 		keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
 		keyboard.u().onPressDo({gestorDeSonido.alternar("daño.ogg")}) // Temporal
 		keyboard.i().onPressDo({gestorDeSonido.alternar("rebote.ogg")})
