@@ -25,6 +25,8 @@ class Menu {
 }
 
 class Nivel {
+	
+	
 	method posicionX(registro) = registro.first()
 	method posicionY(registro) = registro.last()
 	

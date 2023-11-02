@@ -32,17 +32,33 @@ object juego {
 		//interface.cargarNivel(inicial)
 	}
 	
-	method cargarPersonajes() {}
-	
+	method cargarPersonajes() {
+		game.addVisual(pinguinoVerdeCh)
+		game.addVisual(pinguinoRosa)
+	}
 	method cargarColisiones() {}
 	
 	method cargarControles(){
 		const nivel = new Nivel()
-		keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) // Temporal
+		keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) 
+		keyboard.t().onPressDo({self.cargarPersonajes()}) // Temporal
 		keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
 		keyboard.u().onPressDo({gestorDeSonido.alternar("daño.ogg")}) // Temporal
 		keyboard.i().onPressDo({gestorDeSonido.alternar("rebote.ogg")})
 		keyboard.p().onPressDo({gestorDeSonido.pausar()})
+	}
+	
+	method ganar(){
+		game.clear()
+		// imagenGanadora.mostrar()
+		gestorDeSonido.ganar()
+		game.schedule(10000,{game.stop()})
+	}
+	
+	method perder(){
+		game.clear()
+		// imagenPerdedora.mostrar()
+		game.schedule(10000,{game.stop()})
 	}
 	
 	//Manejo de excepciones de movimientos. Por ahora lo pongo acá

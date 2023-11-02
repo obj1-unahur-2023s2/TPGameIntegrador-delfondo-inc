@@ -2,7 +2,7 @@ import wollok.game.*
 
 object gestorDeSonido{
 	var activo = false
-	const musica = game.sound("stageTheme.mp3")
+	var musica = game.sound("stageTheme.mp3")
 	
 	method iniciar(){
 		musica.shouldLoop(true)
@@ -23,5 +23,11 @@ object gestorDeSonido{
 	method alternar(otroSonido){
 		const sonido = game.sound(otroSonido)
 		sonido.play()
+	}
+	
+	method ganar(){
+		if (activo) musica.pause()
+		musica = game.sound("ganar.mp3")
+		musica.play()
 	}
 }
