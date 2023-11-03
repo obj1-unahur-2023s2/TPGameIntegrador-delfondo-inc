@@ -8,17 +8,17 @@ import movimientos.*
 
 object juego {
 	//Instancias de pinguinos siendo personajes y no. 
-	const property pinguinoVerdeCh = new Pinguino(position=game.at(8,10), direccion=abajo, color="Verde", esPersonaje=true)
-	const property pinguinoRosa = new Pinguino(position=game.at(6,10), direccion=abajo, color="Rosa", esPersonaje=false)
-	const property pinguinoRosaCh = new Pinguino(position=game.at(8,10), direccion=abajo, color="Rosa", esPersonaje=true)
-	const property pinguinoVerde = new Pinguino(position=game.at(6,10), direccion=abajo, color="Verde", esPersonaje=false)
+	const property pinguinoVerdeCh = new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true)
+	const property pinguinoRosa = new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false)
+	const property pinguinoRosaCh = new Pinguino(position=game.at(9,1), direccion=abajo, color="Rosa", esPersonaje=true)
+	const property pinguinoVerde = new Pinguino(position=game.at(7,1), direccion=abajo, color="Verde", esPersonaje=false)
 	//Acá cuando el jugador seleccione el pinguino, se guarda esa instancia que es personaje y la del otro pinguino que no lo es. 
-	var seleccionado
-	var noSeleccionado
+	var property seleccionado = pinguinoVerdeCh
+	var property noSeleccionado = pinguinoRosa
+	const enemigo = new Arania(position=game.at(6,7),direccion=abajo)
 	
 	method start(){
 		self.cargarPantalla()
-		self.cargarPersonajes()
 		self.cargarColisiones()
 		self.cargarControles()
 	}
@@ -27,25 +27,33 @@ object juego {
 		game.width(17)
 		game.height(13)
 		game.cellSize(64)
-		game.boardGround("empedrado.jpg")
+		game.boardGround("fondo.jpg")
 		
 		//interface.cargarNivel(inicial)
 	}
 	
 	method cargarPersonajes() {
-		game.addVisual(pinguinoVerdeCh)
-		game.addVisual(pinguinoRosa)
+		game.addVisual(seleccionado)
+		game.addVisual(noSeleccionado)
 	}
+	
+	method agregarEnemigos() {
+		game.addVisual(enemigo)
+		game.onTick(1000,"arañaMov", {=> enemigo.movete()})
+		game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
+	}
+	
 	method cargarColisiones() {}
 	
 	method cargarControles(){
 		const nivel = new Nivel()
 		keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) 
-		keyboard.t().onPressDo({self.cargarPersonajes()}) // Temporal
+		keyboard.t().onPressDo({self.cargarPersonajes() self.agregarEnemigos()}) // Temporal
 		keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
 		keyboard.u().onPressDo({gestorDeSonido.alternar("daño.ogg")}) // Temporal
 		keyboard.i().onPressDo({gestorDeSonido.alternar("rebote.ogg")})
 		keyboard.p().onPressDo({gestorDeSonido.pausar()})
+		controles.controlesPinguinos()
 	}
 	
 	method ganar(){
@@ -80,26 +88,32 @@ object juego {
 			seleccionado.pasoEnY(direccionY)
 		}
 	}
+	
+	method girarPinguinos() {
+		seleccionado.dateVuelta()
+		noSeleccionado.dateVuelta()
+	}
+	//Golpes pinguinos
 	method realizarAtaques() {
 		self.animarGolpePinguinos()
 		self.accionarGolpes()
 		self.desanimarPinguinos()
 	}
 	method accionarGolpes() {
-		const golpe1 = new Golpe(position=self.posicionarGolpePinguino(seleccionado),direccion=seleccionado.direccion())
-		const golpe2 = new Golpe(position=self.posicionarGolpePinguino(pinguinoRosa),direccion=pinguinoRosa.direccion())
-		game.addVisual(golpe1)
-		game.addVisual(golpe2)
+		const golpes = self.crearGolpesNecesarios()
+		//const golpe1 = new Golpe(position=self.posicionarGolpePinguino(seleccionado),direccion=seleccionado.direccion())
+		//const golpe2 = new Golpe(position=self.posicionarGolpePinguino(noSeleccionado),direccion=noSeleccionado.direccion())
 		self.animarGolpePinguinos()
-		#{golpe1,golpe2}.forEach({g => g.eliminarEnemigos()})
-		self.removerGolpes(golpe1,golpe2)
+		self.agregarGolpes(golpes)
+		self.eliminarEnemigos(golpes)
+		//#{golpe1,golpe2}.forEach({g => g.eliminarEnemigos()})
+		//self.removerGolpes(golpe1,golpe2)
+		self.removerGolpes(golpes)
 		self.desanimarPinguinos()
 	}
-	
-	//Golpes pinguinos
 	method animarGolpePinguinos() {
 		seleccionado.estado("Pegando")
-		pinguinoRosa.estado("Pegando")
+		noSeleccionado.estado("Pegando")
 	}
 	
 	method posicionarGolpePinguino(pinguino) {
@@ -116,10 +130,31 @@ object juego {
 			game.at(pinguino.position().x() - 1, pinguino.position().y()) 
 		}
 	}
-	method removerGolpes(golpe1,golpe2) {
-		game.schedule(200, {=> game.removeVisual(golpe1) game.removeVisual(golpe2)})
-	}
 	method desanimarPinguinos() {
-		game.schedule(200,{=> seleccionado.estado("Moviendo") pinguinoRosa.estado("Moviendo")})
+		game.schedule(200,{=> seleccionado.estado("Moviendo") noSeleccionado.estado("Moviendo")})
+	}
+	
+	method crearGolpesNecesarios() {
+		const golpes = []
+		if(game.hasVisual(seleccionado)) {
+			golpes.add(new Golpe(position=self.posicionarGolpePinguino(seleccionado),direccion=seleccionado.direccion()))
+		}
+		if(game.hasVisual(noSeleccionado)) {
+			golpes.add(new Golpe(position=self.posicionarGolpePinguino(noSeleccionado),direccion=noSeleccionado.direccion()))
+		}
+		
+		return golpes
+	}
+	
+	method agregarGolpes(golpes) {
+		golpes.forEach({g => game.addVisual(g)})
+	}
+	
+	method eliminarEnemigos(golpes) {
+		golpes.forEach({g => g.eliminarEnemigos()})
+	}
+	
+	method removerGolpes(golpes) {
+		game.schedule(200, {golpes.forEach({g => game.removeVisual(g)})})
 	}
 }

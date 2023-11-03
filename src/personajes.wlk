@@ -1,6 +1,7 @@
 import wollok.game.*
 import movimientos.*
 import elementos.*
+import juego.*
 
 class Personaje {
 	var position
@@ -10,30 +11,12 @@ class Personaje {
 	
 	method position() = position
 	
+	method image()
+	
+	method eliminate()
+	
+	method esEnemigo()
 	//Metodos de movimientos parametrizados
-	
-	method pasoEnX(direccionX)
-	
-	method pasoEnY(direccionY)
-	
-	//Por ahora esto está comentado
-	/*
-	method pasoArriba(){
-		position = direccion.siguiente(position)
-	}
-	
-	method pasoDerecha(){
-		position = direccion.siguiente(position)
-	}
-	
-	method pasoAbajo(){
-		position = direccion.siguiente(position)
-	}
-	
-	method pasoIzquierda(){
-		position = direccion.siguiente(position)
-	}
-	*/
 	
 	//Para validar en las colisiones
 	method puedePisarte(_)
@@ -45,15 +28,16 @@ class Pinguino inherits Personaje {
 	var property estado = "Parado"
 	var property esPersonaje
 	
-	method image() = "pinguino" + color + direccion.toString() + ".png"
+	override method image() = "pinguino" + color + estado + direccion.toString() + ".png"
 	
 	
 	// Esto es para que los pinguinos se puedan traspasar entre sí.
 	override method puedePisarte(_) = true
 	
+	override method esEnemigo() = false
 	
 	// Movimientos parametrizados.
-	override method pasoEnX(direccionX) {
+	method pasoEnX(direccionX) {
 		if(esPersonaje) {
 			direccion = direccionX
 			self.validarLugarLibre(direccion.siguiente(position))
@@ -66,50 +50,16 @@ class Pinguino inherits Personaje {
 		position = direccion.siguiente(position)
 	}
 	
-	override method pasoEnY(direccionY) {
+	method pasoEnY(direccionY) {
 		direccion = direccionY
 		self.validarLugarLibre(direccion.siguiente(position))
 		estado = "Moviendo"
 		position = direccion.siguiente(position)
 	}
 	
-	//Esto también queda cometnado por ahora
-	/*
-	override method pasoArriba() {
-		direccion = arriba
-		self.validarLugarLibre(direccion.siguiente(position))
-		super()
+	method dateVuelta() {
+		direccion = direccion.opuesto()
 	}
-	override method pasoAbajo() {
-		direccion = abajo
-		self.validarLugarLibre(direccion.siguiente(position))
-		super()
-	}
-	override method pasoDerecha() {
-		if(esPersonaje) {
-			direccion = derecha
-			self.validarLugarLibre(direccion.siguiente(position))
-			super()
-		}
-		else {
-			direccion = izquierda
-			self.validarLugarLibre(direccion.siguiente(position))
-			super()
-		}
-	}
-	override method pasoIzquierda() {
-		if(esPersonaje) {
-			direccion = izquierda
-			self.validarLugarLibre(direccion.siguiente(position))
-			super()
-		}
-		else {
-			direccion = derecha
-			self.validarLugarLibre(direccion.siguiente(position))
-			super()
-		}
-	}
-	*/
 	
 	//Método para validaciones
 	method validarLugarLibre(direccion) {
@@ -120,10 +70,72 @@ class Pinguino inherits Personaje {
 			self.error("No puedo ir para ese lado")
 	}
 	
+	//Metodo para eliminar el pinguino, instanciando un pinguino atrapado en su lugar 
+	override method eliminate() {
+		game.addVisual(new PinguinoAtrapado(position=position,color=color,esPersonaje=esPersonaje,direccion=arriba))
+		game.removeVisual(self)
+	}
 }
-
-
 
 class Arania inherits Personaje {
 	
+	override method image() = "arania.png"
+	override method esEnemigo() = true
+	override method puedePisarte(_) = true
+	
+	method movete() {
+		const numDir = [1,2,3,4].anyOne()
+		
+		if(numDir == 1) {
+			direccion = arriba
+		}
+		if(numDir == 2) {
+			direccion = derecha
+		}
+		if(numDir == 3) {
+			direccion = abajo
+		}
+		if(numDir == 4) {
+			direccion = izquierda
+		}
+		
+		self.moverSiSePuedeA(direccion.siguiente(position))
+	}
+	override method eliminate() {
+		game.removeVisual(self)
+		game.removeTickEvent("arañaMov")
+		game.removeTickEvent("arañaAtaque")
+	}
+	method atraparPinguino() {
+		const objetosDeLaCelda = game.getObjectsIn(position).filter({o => o.image().startsWith("pinguino")})
+		objetosDeLaCelda.forEach({o => o.eliminate()}) 
+	}
+	
+	method moverSiSePuedeA(pos) {
+		if(self.todosSonPisables(pos)) {
+			position = pos
+		}
+	}
+	
+	method todosSonPisables(pos) = game.getObjectsIn(pos).all({o => o.puedePisarte(self)})
+}
+
+class PinguinoAtrapado inherits Personaje {
+	const color
+	const esPersonaje
+	override method image() = "telaraniaPingu" + color + ".png"
+	override method esEnemigo() = true
+	override method puedePisarte(_) = true
+	override method eliminate() {
+		const pinguino = new Pinguino(position=position,direccion=abajo,color=color,esPersonaje=esPersonaje)
+		game.removeVisual(self)
+		game.schedule(200, {=> if(esPersonaje) {
+			juego.seleccionado(pinguino)
+			game.addVisual(juego.seleccionado())
+		}
+		else {
+			juego.noSeleccionado(pinguino)
+			game.addVisual(juego.noSeleccionado())
+		}})
+	}
 }
