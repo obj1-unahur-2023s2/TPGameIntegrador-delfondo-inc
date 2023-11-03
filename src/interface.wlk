@@ -34,6 +34,7 @@ class Nivel {
 	method construirNivel(lista){
 		lista.forEach({ p => self.agregarBloque(p) })
 		self.marco().forEach({ e => self.agregarPared(e) })
+		
 	}
 	
 	method agregarBloque(ubicacion){
@@ -42,6 +43,9 @@ class Nivel {
 	
 	method agregarPared(ubicacion){
 		game.addVisualIn(new Pared(), game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
+	}
+	method agregarCorazon(){
+		game.addVisual(corazon)
 	}
 	
 	method marco(){

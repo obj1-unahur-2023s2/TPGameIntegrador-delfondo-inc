@@ -27,8 +27,9 @@ class Pinguino inherits Personaje {
 	const color
 	var property estado = "Parado"
 	var property esPersonaje
+	var property image = "pinguino" + color + estado + direccion.toString() + ".png"
 	
-	override method image() = "pinguino" + color + estado + direccion.toString() + ".png"
+	override method image() = image
 	
 	
 	// Esto es para que los pinguinos se puedan traspasar entre sí.
@@ -79,7 +80,8 @@ class Pinguino inherits Personaje {
 
 class Arania inherits Personaje {
 	
-	override method image() = "arania.png"
+	var property image = "arania.png"
+	
 	override method esEnemigo() = true
 	override method puedePisarte(_) = true
 	
@@ -114,11 +116,19 @@ class Arania inherits Personaje {
 	method moverSiSePuedeA(pos) {
 		if(self.todosSonPisables(pos)) {
 			position = pos
+			self.animacion()
 		}
 	}
 	
 	method todosSonPisables(pos) = game.getObjectsIn(pos).all({o => o.puedePisarte(self)})
+	
+	method animacion(){ 
+			self.image("arania.png")
+			game.schedule(1000, {self.image("arania2.png")})
+		}
 }
+
+
 
 class PinguinoAtrapado inherits Personaje {
 	const color

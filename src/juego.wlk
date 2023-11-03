@@ -42,13 +42,16 @@ object juego {
 		game.onTick(1000,"arañaMov", {=> enemigo.movete()})
 		game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
 	}
+	method agregarCorazon(){
+		game.addVisual(corazon)
+	}
 	
 	method cargarColisiones() {}
 	
 	method cargarControles(){
 		const nivel = new Nivel()
 		keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) 
-		keyboard.t().onPressDo({self.cargarPersonajes() self.agregarEnemigos()}) // Temporal
+		keyboard.t().onPressDo({self.cargarPersonajes() self.agregarEnemigos() self.agregarCorazon()}) // Temporal
 		keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
 		keyboard.u().onPressDo({gestorDeSonido.alternar("daño.ogg")}) // Temporal
 		keyboard.i().onPressDo({gestorDeSonido.alternar("rebote.ogg")})

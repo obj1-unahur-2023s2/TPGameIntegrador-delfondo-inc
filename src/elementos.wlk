@@ -7,24 +7,25 @@ object corazon {
 	
 	method image() = if(cerrado) "kokoro.png" else "kokoro2.png"
 	method position() = game.at(8,10)
-	
+	method puedePisarte(_) = false
+	method esEnemigo() = false	
 	method abrir(){ cerrado = false }
 }
 
 class Pared {
-	method image() = "prueba1.png"
+	method image() = "assets/pared.png"
 	method puedePisarte(_) = false
 	method esEnemigo() = false
 }
 
 class Bloque {
-	method image() = "prueba3.png"
+	method image() = "assets/bloque.png"
 	method puedePisarte(_) = false
 	method esEnemigo() = false
 }
 
 class Telarana {
-	method image() = "prueba2.png"
+	method image() = "assets/telarania.png"
 }
  //Las instancias de los golpes de los pinguinos
 class Golpe {
@@ -38,6 +39,6 @@ class Golpe {
 	method eliminate() {}
 	method eliminarEnemigos() {
 		const objetosEnemigos = game.getObjectsIn(position).filter({o => o.esEnemigo()})
-		objetosEnemigos.forEach({e => e.eliminate()})
+		objetosEnemigos.forEach({e =>e.eliminate()})
 	}
 }
