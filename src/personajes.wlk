@@ -28,9 +28,7 @@ class Pinguino inherits Personaje {
 	var property estado = "Parado"
 	var property esPersonaje
 	var property image = "pinguino" + color + estado + direccion.toString() + ".png"
-	
-	override method image() = image
-	
+		
 	
 	// Esto es para que los pinguinos se puedan traspasar entre sí.
 	override method puedePisarte(_) = true
@@ -49,7 +47,7 @@ class Pinguino inherits Personaje {
 		}
 		estado = "Moviendo"
 		position = direccion.siguiente(position)
-		//self.animacion(direccion)
+		self.animacion(direccion)
 	}
 	
 	method pasoEnY(direccionY) {
@@ -57,17 +55,22 @@ class Pinguino inherits Personaje {
 		self.validarLugarLibre(direccion.siguiente(position))
 		estado = "Moviendo"
 		position = direccion.siguiente(position)
-	//	self.animacion(direccion)
+		self.animacion(direccion)
 	}
 	
 	method dateVuelta() {
 		direccion = direccion.opuesto()
 	}
-	/*Animacion de movimiento
+	//Animacion de movimiento-subir imagenes correspondientes hacia cada direccion del rosa-
 		method animacion(direccion){ 
-			self.image()
-			game.schedule(1000, {self.image("pinguino" + color + estado + direccion.toString() + ".png")})
-		}*/
+			self.image("pinguino" + color + estado + direccion.toString() + ".png")
+			game.schedule(400,{=> self.image("pinguino" + color + estado + direccion.toString() + "2.png")})
+			game.schedule(800,{=>
+				estado = "Parado"
+				self.image("pinguino" + color + estado + direccion.toString() + ".png")
+			})
+			
+		}
 	
 	//Método para validaciones
 	method validarLugarLibre(direccion) {
