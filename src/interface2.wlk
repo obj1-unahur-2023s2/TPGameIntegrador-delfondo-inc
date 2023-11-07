@@ -1,21 +1,23 @@
 import wollok.game.*
 import elementos.*
 import juego.*
+import sonido.*
+import movimientos.*
+import personajes.*
 
 object gestorNiveles{
 	var property nivelActualNumero = 1
 	var property nivelActual = nivel1
-	
 	method ultimoNivel() = self.nivelActual().siguienteNivel() == null
 	
 	method cargarSiguienteNivel(){
 		if(!self.ultimoNivel()){
 			nivelActual = nivelActual.siguienteNivel()
 			nivelActualNumero++
-			nivelActual.iniciar()	
+			nivelActual.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))	
 		}
 		else{
-			juego.ganar()
+			//juego.ganar()
 		}
 	}
 }
@@ -41,7 +43,6 @@ class Nivel {
 	method agregarTelarania(ubicacion){
 		game.addVisualIn(new Telarana(), game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
 	}
-
 	method construirNivel(){
 		game.clear()
 		const marco = []
@@ -56,13 +57,69 @@ class Nivel {
 		self.agregarCorazon(corazonGanador)
 	}
 	
-	method iniciar() {
+	method iniciar(per1,per2) {
+		gestorDeSonido.sonidoJuego()
 		self.construirNivel()
-		juego.cargarPersonajes()
+		juego.cargarPersonajes(per1,per2)
 		juego.agregarEnemigos()
 		juego.cargarControles()
+		self.volverAlMenu()
+	}
+	
+	method volverAlMenu(){
+		keyboard.m().onPressDo{menu.cargar() gestorDeSonido.pararMusica()}
 	}
 }
+
+object menu {
+	var property image= "menugurin.png"
+	var property opciones=["menugurin.png","menumalon.png","menucontrol.png","menusalir.png"]
+	const property position= game.at(0,0)
+	
+	method cargar(){
+		game.clear()
+		game.addVisual(self)
+		game.addVisual(selector)
+		keyboard.up().onPressDo{selector.subir()}
+		keyboard.down().onPressDo{selector.bajar()}
+		keyboard.enter().onPressDo{selector.seleccionar()}
+		
+	}
+	
+}
+
+object control{
+	var property image= "control.png"
+	var property position= game.at(0,0)
+	method cargar(){
+		game.addVisual(self)
+		gestorDeSonido.sonidoControles()
+		keyboard.m().onPressDo{menu.cargar() gestorDeSonido.pararMusica()
+		}
+	}
+}
+
+
+object selector{
+	var property posImagen=0
+	var property position= game.at(0,7)
+	
+	
+	method subir(){
+		if (self.position().y()<7) {position=position.up(2) posImagen=0.max(posImagen-1) menu.image(menu.opciones().get(posImagen))gestorDeSonido.sonidoCursor() }
+	}
+	method bajar(){
+		if (self.position().y()>1) {position=position.down(2) posImagen=posImagen+1 menu.image(menu.opciones().get(posImagen))gestorDeSonido.sonidoCursor()}
+	}
+	
+	method seleccionar(){
+		if (self.position().y()==7){nivel1.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))}
+		if (self.position().y()==5){nivel1.iniciar(new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=true), new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=false))}
+		if (self.position().y()==3) {control.cargar()}
+		if (self.position().y()==1){game.stop()}
+	}
+}
+
 
 const nivel1 = new Nivel(
 	siguienteNivel = nivel2,
@@ -82,7 +139,8 @@ const nivel2 = new Nivel(
 	paredes = [[2,5],[3,3],[3,5],[3,7],[3,9],[3,10],[4,7],[5,3],[5,4],[5,5],[5,7],[5,8],[5,9],[5,10],[6,5],[7,2],[7,3],[7,5],[7,7],[7,9],[7,10],[8,7],[9,2],[9,3],[9,4],[9,5],[9,6],[9,7],[9,8],[9,9],[9,10],[10,3],[10,7],[10,10],[11,3],[11,5],[11,7],[11,9],[11,10],[12,5],[12,9],[13,3],[13,5],[13,7],[13,8],[13,9],[13,10],[14,5],[14,9],[15,3],[15,5],[15,7],[15,9],[15,10],[16,3],[16,7]],
 	corazonGanador = [8,10],
 	telaranias = null,
-	aranias = null
+	aranias = [[6,7],[6,8]]
+	
 )
 
 const nivel3 = new Nivel(

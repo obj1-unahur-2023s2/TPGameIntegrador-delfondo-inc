@@ -1,33 +1,57 @@
 import wollok.game.*
 
 object gestorDeSonido{
-	var activo = false
-	var musica = game.sound("stageTheme.mp3")
-	
-	method iniciar(){
-		musica.shouldLoop(true)
-		activo = true
-		musica.play()
+	var property sonando
+	method sonidoJuego(){
+		sonando = soundProducer.sound("assets/stageTheme.mp3")
+		sonando.play()
+		sonando.shouldLoop(true)
+		sonando.volume(0.5)
 	}
+	method sonidoCursor(){
+		sonando = soundProducer.sound("assets/Move.mp3")
+		sonando.play()
+		sonando.volume(0.5)
+	}
+	
+	method sonidoActivarCorazon(){
+		sonando = soundProducer.sound("assets/ganarNivel.mp3")
+		sonando.play()
+		sonando.volume(0.7)
+	}
+	
+	method sonidoPerder(){
+		sonando = soundProducer.sound("assets/perderNivel.mp3")
+		sonando.play()
+		sonando.volume(0.7)
+	}
+	
+	method sonidoControles(){
+		sonando = soundProducer.sound("assets/musicaControles.mp3")
+		sonando.play()
+		sonando.shouldLoop(true)
+		sonando.volume(0.7)
+	}
+	method sonidoGanar(){
+		sonando = soundProducer.sound("assets/ganarNivel.mp3")
+		sonando.play()
+		sonando.volume(0.7)
+	}
+	method pararMusica(){
+		sonando.stop()
+	}
+}
 
-	method activar(){
-		activo = true
-		musica.resume()
-	}
-					
-	method pausar(){
-		activo = false
-		musica.pause()
+
+
+object soundProducer {
+	
+	var provider = game
+	
+	method provider(_provider){
+		provider = _provider
 	}
 	
-	method alternar(otroSonido){
-		const sonido = game.sound(otroSonido)
-		sonido.play()
-	}
+	method sound(audioFile) = provider.sound(audioFile)
 	
-	method ganar(){
-		if (activo) musica.pause()
-		musica = game.sound("ganar.mp3")
-		musica.play()
-	}
 }
