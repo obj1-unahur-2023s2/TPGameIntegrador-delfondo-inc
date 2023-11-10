@@ -107,6 +107,8 @@ object juego {
 	method animarGolpePinguinos() {
 		seleccionado.estado("Pegando")
 		noSeleccionado.estado("Pegando")
+		seleccionado.animacionGolpes(seleccionado.direccion())
+		noSeleccionado.animacionGolpes(noSeleccionado.direccion())
 	}
 	
 	method posicionarGolpePinguino(pinguino) {

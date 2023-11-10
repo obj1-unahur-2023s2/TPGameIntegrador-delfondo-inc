@@ -7,7 +7,7 @@ object corazon {
 	
 	method image() = if(cerrado) "kokoro.png" else "kokoro2.png"
 	method position() = game.at(8,10)
-	method puedePisarte(_) = false
+	method puedePisarte(_) = true
 	method esEnemigo() = false	
 	method abrir(){ cerrado = false }
 }

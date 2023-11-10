@@ -64,13 +64,18 @@ class Pinguino inherits Personaje {
 	//Animacion de movimiento-subir imagenes correspondientes hacia cada direccion del rosa-
 		method animacion(direccion){ 
 			self.image("pinguino" + color + estado + direccion.toString() + ".png")
-			game.schedule(400,{=> self.image("pinguino" + color + estado + direccion.toString() + "2.png")})
-			game.schedule(800,{=>
-				estado = "Parado"
-				self.image("pinguino" + color + estado + direccion.toString() + ".png")
-			})
+			game.schedule(250,{=> self.image("pinguino" + color + estado + direccion.toString() + "2.png")})
 			
 		}
+		
+	method animacionGolpes(direccion){
+		self.image("pinguino" + color + estado + direccion.toString() + ".png")
+		game.schedule(250,{=> 
+			estado ="Moviendo"
+			self.image("pinguino" + color + estado + direccion.toString() + "2.png")
+		})
+	}
+		
 	
 	//Método para validaciones
 	method validarLugarLibre(direccion) {
