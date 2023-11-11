@@ -18,7 +18,9 @@ object juego {
 	//Acá cuando el jugador seleccione el pinguino, se guarda esa instancia que es personaje y la del otro pinguino que no lo es. 
 	var property seleccionado //= //pinguinoVerdeCh
 	var property noSeleccionado //= pinguinoRosa
-	const enemigo = new Arania(position=game.at(6,7),direccion=abajo)
+	const arania = new Arania(position=game.at(6,7),direccion=abajo)
+	
+	method arania() = arania
 	
 	method cargarPersonajes(p1,p2)
 	{
@@ -28,7 +30,7 @@ object juego {
 		p2.imprimir()
 	}
 	
-	method agregarEnemigos() {
+	method agregarEnemigos(enemigo) {
 		enemigo.imprimir()
 		game.onTick(1000,"arañaMov", {=> enemigo.movete()})
 		game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})

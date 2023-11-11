@@ -18,6 +18,7 @@ object tablero
 		tiempo.contador()
 		nivel.imprimir()
 	}
+	method estaEnCero() = tiempo.cero()
 }
 
 class Puntaje inherits Visual
