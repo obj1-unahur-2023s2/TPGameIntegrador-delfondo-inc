@@ -25,7 +25,17 @@ class Bloque {
 }
 
 class Telarana {
+	var position
+	
 	method image() = "assets/telarania.png"
+	method puedePisarte(_) = true
+	method esEnemigo() = true
+	method eliminate() {
+		game.removeVisual(self)}
+	method atraparPinguino() {
+		const objetosDeLaCelda = game.getObjectsIn(position).filter({o => o.image().startsWith("pinguino")})
+		objetosDeLaCelda.forEach({o => o.eliminate()}) 
+	}
 }
  //Las instancias de los golpes de los pinguinos
 class Golpe {

@@ -1,6 +1,6 @@
 import elementos.*
 import wollok.game.*
-import interface2.*
+import interface.*
 import sonido.*
 import personajes.*
 import teclasPinguinos.*
