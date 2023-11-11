@@ -2,7 +2,13 @@ import wollok.game.*
 import personajes.*
 import juego.*
 
-object corazon {
+class Visual
+{
+	method imprimir(){ game.addVisual(self) } 
+}
+
+object corazon inherits Visual
+{
 	var cerrado = true
 	
 	method image() = if(cerrado) "kokoro.png" else "kokoro2.png"
@@ -12,19 +18,38 @@ object corazon {
 	method abrir(){ cerrado = false }
 }
 
-class Pared {
+class Pared inherits Visual
+{
 	method image() = "assets/pared.png"
 	method puedePisarte(_) = false
 	method esEnemigo() = false
 }
 
-class Bloque {
-	method image() = "assets/bloque.png"
+class Bloque inherits Visual
+{
+	var image = "assets/bloque.png"
+	
+	method image() = image
+	method modo(num)
+	{
+		if(num == 2)
+		{
+			image = "assets/bloque2.png"
+		} else
+		if(num ==3)
+		{
+			image = "assets/bloque3.png"
+		} else {
+			image= "assets/bloque4.png"
+		}
+		
+	}
 	method puedePisarte(_) = false
 	method esEnemigo() = false
 }
 
-class Telarana {
+class Telarana inherits Visual
+{
 	var position
 	
 	method image() = "assets/telarania.png"

@@ -4,17 +4,15 @@ import elementos.*
 import juego.*
 
 class Personaje {
-	var position
+	var property position
 	var direccion
 	
 	method direccion() = direccion
-	
 	method position() = position
-	
 	method image()
+	method imprimir(){ game.addVisual(self) }
 	
 	method eliminate()
-	
 	method esEnemigo()
 	//Metodos de movimientos parametrizados
 	
@@ -26,7 +24,7 @@ class Personaje {
 class Pinguino inherits Personaje {
 	const color
 	var property estado = "Parado"
-	var property esPersonaje
+	var property esPersonaje = false
 	var property image = "pinguino" + color + estado + direccion.toString() + ".png"
 		
 	
@@ -34,6 +32,8 @@ class Pinguino inherits Personaje {
 	override method puedePisarte(_) = true
 	
 	override method esEnemigo() = false
+	
+	method principal(){ esPersonaje = true }
 	
 	// Movimientos parametrizados.
 	method pasoEnX(direccionX) {

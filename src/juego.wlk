@@ -20,20 +20,19 @@ object juego {
 	var property noSeleccionado //= pinguinoRosa
 	const enemigo = new Arania(position=game.at(6,7),direccion=abajo)
 	
-	method cargarPersonajes(p1,p2) {
+	method cargarPersonajes(p1,p2)
+	{
 		seleccionado=p1
 		noSeleccionado=p2
-		game.addVisual(p1)
-		game.addVisual(p2)
+		p1.imprimir()
+		p2.imprimir()
 	}
 	
 	method agregarEnemigos() {
-		game.addVisual(enemigo)
+		enemigo.imprimir()
 		game.onTick(1000,"arañaMov", {=> enemigo.movete()})
 		game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
 	}
-	
-	method cargarColisiones() {}
 	
 	method cargarControles(){
 		//const nivel = new Nivel()
