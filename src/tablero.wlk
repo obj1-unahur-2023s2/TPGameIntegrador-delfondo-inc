@@ -1,5 +1,6 @@
 import wollok.game.*
 import interface.*
+import elementos.*
 
 object tablero
 {
@@ -17,11 +18,6 @@ object tablero
 		tiempo.contador()
 		nivel.imprimir()
 	}
-}
-
-class Visual
-{
-	method imprimir(){ game.addVisual(self) } 
 }
 
 class Puntaje inherits Visual
