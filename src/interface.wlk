@@ -4,6 +4,7 @@ import juego.*
 import sonido.*
 import movimientos.*
 import personajes.*
+import tablero.*
 
 object gestorNiveles{
 	var property nivelActualNumero = 1
@@ -24,8 +25,9 @@ object gestorNiveles{
 }
 
 class Nivel {
+	const nombre
 	var property siguienteNivel = null
-	var property paredes = []
+	var property bloques = []
 	var property corazonGanador = null
 	var property telaranias = []
 	var property aranias = []
@@ -52,8 +54,8 @@ class Nivel {
 		(1..11).forEach({ i => marco.add([0,i]) })
 		(1..16).forEach({ i => marco.add([i,11]) })
 		(1..10).forEach({ i => marco.add([16,i]) })
-		paredes.forEach({ubicacion=>self.agregarPared(ubicacion)})
-		marco.forEach({ubicacion=>self.agregarBloque(ubicacion)})
+		bloques.forEach({ubicacion=>self.agregarBloque(ubicacion)})
+		marco.forEach({ubicacion=>self.agregarPared(ubicacion)})
 		telaranias.forEach({ubicacion=>self.agregarTelarania(ubicacion)})
 		self.agregarCorazon(corazonGanador)
 	}
@@ -61,6 +63,8 @@ class Nivel {
 	method iniciar(per1,per2) {
 		gestorDeSonido.sonidoJuego()
 		self.construirNivel()
+		tablero.nivelDato(nombre)
+		tablero.iniciar()
 		juego.cargarPersonajes(per1,per2)
 		juego.agregarEnemigos()
 		juego.cargarControles()
@@ -118,8 +122,9 @@ object selector{
 
 
 const nivel1 = new Nivel(
+	nombre = "nivel1",
 	siguienteNivel = nivel2,
-	paredes = [ [1,4],[1,8],[2,2],[2,4],[2,6],[2,8],[2,9],[3,2],[3,6],[3,9],
+	bloques = [ [1,4],[1,8],[2,2],[2,4],[2,6],[2,8],[2,9],[3,2],[3,6],[3,9],
 				[4,2],[4,4],[4,6],[4,8],[4,9],[5,2],[5,6],[6,2],[6,4],[6,6],
 				[6,8],[6,9],[7,2],[7,9],[8,1],[8,2],[8,3],[8,4],[8,5],[8,6],
 				[8,7],[8,8],[8,9],[9,2],[9,8],[10,2],[10,4],[10,6],[10,8],[10,9],
@@ -131,8 +136,9 @@ const nivel1 = new Nivel(
 )
 
 const nivel2 = new Nivel(
+	nombre = "nivel2",
 	siguienteNivel = nivel3,
-	paredes = [	[1,4],[2,2],[2,4],[2,6],[2,8],[2,9],[3,6],[4,2],[4,3],[4,4],
+	bloques = [	[1,4],[2,2],[2,4],[2,6],[2,8],[2,9],[3,6],[4,2],[4,3],[4,4],
 				[4,6],[4,7],[4,8],[4,9],[5,4],[6,1],[6,2],[6,4],[6,6],[6,8],
 				[6,9],[7,6],[7,9],[8,1],[8,2],[8,3],[8,4],[8,5],[8,6],[8,7],
 				[8,8],[8,9],[9,2],[9,6],[9,9],[10,2],[10,4],[10,6],[10,8],[10,9],
@@ -145,8 +151,9 @@ const nivel2 = new Nivel(
 )
 
 const nivel3 = new Nivel(
+	nombre = "nivel3",
 	siguienteNivel = null,
-	paredes = null,
+	bloques = null,
 	corazonGanador = [8,10],
 	telaranias = null,
 	aranias = null

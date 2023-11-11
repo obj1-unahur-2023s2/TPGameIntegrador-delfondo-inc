@@ -36,7 +36,7 @@ object juego {
 	method cargarColisiones() {}
 	
 	method cargarControles(){
-		const nivel = new Nivel()
+		//const nivel = new Nivel()
 		//keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) 
 		//keyboard.t().onPressDo({self.cargarPersonajes(p1,p2) self.agregarEnemigos()}) // Temporal
 		//keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
