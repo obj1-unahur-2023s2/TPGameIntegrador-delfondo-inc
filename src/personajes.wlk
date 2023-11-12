@@ -2,7 +2,7 @@ import wollok.game.*
 import movimientos.*
 import elementos.*
 import juego.*
-
+import tablero.*
 class Personaje {
 	var property position
 	var direccion
@@ -123,6 +123,7 @@ class Arania inherits Personaje {
 		self.moverSiSePuedeA(direccion.siguiente(position))
 	}
 	override method eliminate() {
+		tablero.sumarPuntaje(15)
 		game.removeVisual(self)
 		game.removeTickEvent(nombre + "1")
 		game.removeTickEvent(nombre)

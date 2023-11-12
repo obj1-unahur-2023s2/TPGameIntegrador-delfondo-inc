@@ -18,6 +18,12 @@ object tablero
 		tiempo.contador()
 		nivel.imprimir()
 	}
+	method sumarTiempoRestante(){
+		tiempo.clear()
+		puntaje.sumar(tiempo.tiempo().get(0).num()*3)
+		puntaje.sumar(tiempo.tiempo().get(1).num()*2)
+		puntaje.sumar(tiempo.tiempo().get(2).num()*1)
+	}
 	method estaEnCero() = tiempo.cero()
 }
 
@@ -69,7 +75,7 @@ class Tiempo inherits Visual
 	method position(){ return game.at(6,12) }
 	method cero(){ return tiempo.all({ d => d.num() == 0 }) }
 	method clear(){ game.removeTickEvent("unidad") }
-	
+	method tiempo()=tiempo
 	override method imprimir()
 	{ 
 		super()

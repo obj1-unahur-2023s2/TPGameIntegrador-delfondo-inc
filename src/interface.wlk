@@ -13,12 +13,13 @@ object gestorNiveles{
 	method ultimoNivel() = self.nivelActual().siguienteNivel() == null
 	
 	method cargarSiguienteNivel(){
+		tablero.sumarTiempoRestante()
 		if(!self.ultimoNivel()){
 			nivelActual = nivelActual.siguienteNivel()
 			nivelActualNumero++
-			gestorDeSonido.pararMusica()
 			corazon.cerrar()
-			nivelActual.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))	
+			nivelActual.iniciar(juego.seleccion(), juego.seleccion2())	
+			//nivelActual.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))
 		}
 		else{
 			juego.ganar()
@@ -47,7 +48,7 @@ class Nivel {
 	}
 	method agregarCorazon(ubicacion){
 		game.addVisualIn(corazon, game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
-		game.onTick(3000,"verificarCorazon", {=> corazon.verificar()})
+		game.onTick(100,"verificarCorazon", {=> corazon.verificar()})
 	}
 	method construirNivel(){
 		game.clear()
@@ -122,11 +123,13 @@ object menu
         { 
             verde.principal()
             nivel1.iniciar(verde,rosa)
+            juego.guardarSeleccion(verde, rosa)
         } else
         if (seleccion == 1)
         { 
             rosa.principal() 
             nivel1.iniciar(rosa, verde)
+            juego.guardarSeleccion(rosa, verde)
         } else
         if (seleccion == 2){ control.cargar() }
         else { game.stop() }

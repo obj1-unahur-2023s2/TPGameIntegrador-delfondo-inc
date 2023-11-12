@@ -7,18 +7,18 @@ import teclasPinguinos.*
 import movimientos.*
 
 object juego {
-	
-	//Instancias de pinguinos siendo personajes y no. 
-	/* 
-	const property pinguinoVerdeCh = new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true)
-	const property pinguinoRosa = new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false)
-	const property pinguinoRosaCh = new Pinguino(position=game.at(9,1), direccion=abajo, color="Rosa", esPersonaje=true)
-	const property pinguinoVerde = new Pinguino(position=game.at(7,1), direccion=abajo, color="Verde", esPersonaje=false)
-	*/
 	//Acá cuando el jugador seleccione el pinguino, se guarda esa instancia que es personaje y la del otro pinguino que no lo es. 
 	var property seleccionado //= //pinguinoVerdeCh
 	var property noSeleccionado //= pinguinoRosa
-	
+	var seleccion
+	var seleccion2
+    
+    method seleccion(){
+    	return new Pinguino(position=seleccion, direccion=abajo, color=seleccionado.color())
+    }
+     method seleccion2(){
+    	return new Pinguino(position=seleccion2, direccion=abajo, color=noSeleccionado.color())
+    }
 method cargarPersonajes(p1,p2)
     {
         seleccionado=p1
@@ -26,11 +26,15 @@ method cargarPersonajes(p1,p2)
         p1.imprimir()
         p2.imprimir()
     }
-	
+	method guardarSeleccion(smt1,smt2){
+		seleccion=smt1.position()
+		seleccion2=smt2.position()
+	}
 	method agregarEnemigos(enemigo) {
         enemigo.imprimir()
-        game.onTick(1000,enemigo.nombre() + "1", {=> enemigo.movete()})
+        game.onTick(800,enemigo.nombre() + "1", {=> enemigo.movete()})
         game.onTick(100,enemigo.nombre(), {=> enemigo.atraparPinguino()})
+        game.onTick(2000, "Perder",{self.perder()})
     }
     
     method agregarTelaranias(telarania) {
@@ -39,32 +43,39 @@ method cargarPersonajes(p1,p2)
     }
 	
 	method cargarControles(){
-		//const nivel = new Nivel()
-		//keyboard.t().onPressDo({nivel.construirNivel(interface.nivel1())}) 
-		//keyboard.t().onPressDo({self.cargarPersonajes(p1,p2) self.agregarEnemigos()}) // Temporal
-		//keyboard.y().onPressDo({gestorDeSonido.iniciar()}) // Temporal
-		//keyboard.u().onPressDo({gestorDeSonido.alternar("daño.ogg")}) // Temporal
-		//keyboard.i().onPressDo({gestorDeSonido.alternar("rebote.ogg")})
-		//keyboard.p().onPressDo({gestorDeSonido.pausar()})
 		controles.controlesPinguinos()
 	}
 	
     
-	method ganar(){
-		game.clear()
-		gestorDeSonido.pararMusica()
-		gestorDeSonido.sonidoGanar()
-		imagenGanadora.mostrar()
-		game.schedule(10000,{game.stop()})
-		
-	}
-	
-	method perder(){
-		game.clear()
-		// imagenPerdedora.mostrar()
-		game.schedule(10000,{game.stop()})
-		
-	}
+	 method volverAlMenu(){
+        keyboard.m().onPressDo{ menu.cargar() gestorDeSonido.pararMusica() }
+    }
+
+    method estanAtrapados()= !game.allVisuals().any({o => o.image().startsWith("pinguino")})//
+
+
+    method pasarDeNivel(){
+        gestorDeSonido.pararMusica()
+        gestorDeSonido.sonidoGanar()
+        game.schedule(4100,{gestorNiveles.cargarSiguienteNivel()})
+    }
+
+    method ganar(){
+        game.clear()
+        imagenGanadora.mostrar()
+        self.volverAlMenu()
+
+    }
+
+    method perder(){
+        if(self.estanAtrapados()){
+        game.clear()
+        gestorDeSonido.pararMusica()
+        imagenPerdedora.mostrar()
+        gestorDeSonido.sonidoPerder()
+        self.volverAlMenu()
+        }
+    }
 	
 	//Manejo de excepciones de movimientos. Por ahora lo pongo acá
 	method moverPinguinosEnX(direccionX) {

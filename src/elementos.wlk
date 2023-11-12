@@ -2,13 +2,14 @@ import wollok.game.*
 import personajes.*
 import juego.*
 import interface.*
-
+import tablero.*
 class Visual
 {
 	method imprimir(){ game.addVisual(self) } 
 	method puedePisarte(_) = false
 	method esEnemigo() = false
 }
+const imagenPerdedora = new Visuales(image = "pantallaPerder.png")
 const imagenGanadora = new Visuales(image = "pantallaGanar.png")
 class Visuales {
     var property image
@@ -25,20 +26,21 @@ object corazon inherits Visual
 	method image() = if(cerrado) "kokoro.png" else "kokoro2.png"
 	method position() = game.at(8,10)
 	override method puedePisarte(_) = true
-	method abrir(){ cerrado = false }
+	method abrir(){ tablero.sumarPuntaje(50) cerrado = false }
 	method cerrar() { cerrado = true}
 	
 	method verificar(){
         if ((game.at(7,10).equals(juego.seleccionado().position()) or game.at(7,10).equals(juego.noSeleccionado().position())) and 
             ((game.at(9,10).equals(juego.seleccionado().position()) or game.at(9,10).equals(juego.noSeleccionado().position()))))
             {
+            	game.removeTickEvent("verificarCorazon")
             	self.abrir()
-            	game.schedule(2000,{gestorNiveles.cargarSiguienteNivel()})
-            	// gestorNiveles.cargarSiguienteNivel()
+				juego.pasarDeNivel()
             }
       
     }
    }
+    
     
 
 
@@ -95,6 +97,7 @@ class Telarana inherits Visual
 	override method puedePisarte(_) = true
 	override method esEnemigo() = true
 	method eliminate() {
+		tablero.sumarPuntaje(10)
 		game.removeVisual(self)
 		game.removeTickEvent(nombre)
 		}
