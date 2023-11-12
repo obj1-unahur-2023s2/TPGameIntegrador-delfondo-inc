@@ -12,9 +12,9 @@
 - Calderon Carlos
 
 ## Capturas
-![menumalon](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/8bbc6eed-f09c-451a-9194-6499e412cf45)
+![menugurin](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/2d70a753-a70c-4718-aeb7-e9c183b8ae7d)
 
-![control](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/d7fdff7b-4f19-429f-80b6-d05387658acc)
+![control](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/5997874e-2c9f-4186-973a-d9515ea3d144)
 
 ![pantallaGanar](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/5bed441d-5471-4bd3-baeb-e9bb3e2afb9c)
 
