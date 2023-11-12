@@ -20,8 +20,10 @@
 ## Reglas de Juego / Instrucciones
 
 * Primero ha de seleccionarse el protagonista entre 2 personajes.
-	*Personaje Gurin: Maneja los controles del lado derecho.
-	*Personaje Malon: Maneja los controles del lado izquierdo.
+  
+	* Personaje Gurin: Maneja los controles del lado derecho.
+  
+	* Personaje Malon: Maneja los controles del lado izquierdo.
 
 	Los movimientos son
 ![control](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/5997874e-2c9f-4186-973a-d9515ea3d144)
