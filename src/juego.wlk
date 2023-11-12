@@ -34,7 +34,11 @@ method cargarPersonajes(p1,p2)
         enemigo.imprimir()
         game.onTick(1000,"arañaMov", {=> enemigo.movete()})
         game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
-        game.onTick(300,"verificarCorazon", {=> corazon.verificar()})
+    }
+    
+    method agregarTelaranias(telarania) {
+    	telarania.imprimir()
+    	// game.onTick(100,"atraparTelarania", {=> telarania.atraparPinguino()})
     }
 	
 	method cargarControles(){

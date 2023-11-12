@@ -6,7 +6,7 @@ object gestorDeSonido{
 		sonando = soundProducer.sound("assets/stageTheme.mp3")
 		sonando.play()
 		sonando.shouldLoop(true)
-		sonando.volume(0.0)
+		sonando.volume(0.2)
 	}
 	method sonidoCursor(){
 		sonando = soundProducer.sound("assets/Move.mp3")

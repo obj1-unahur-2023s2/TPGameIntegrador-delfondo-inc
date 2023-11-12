@@ -26,14 +26,15 @@ object corazon inherits Visual
 	method position() = game.at(8,10)
 	override method puedePisarte(_) = true
 	method abrir(){ cerrado = false }
+	method cerrar() { cerrado = true}
 	
 	method verificar(){
-        if ((game.at(7,10).equals(juego.seleccionado().position()) or game.at(7,10).equals(juego.noSeleccionado().position()) and 
-        	((game.at(9,10).equals(juego.seleccionado().position()) or game.at(9,10).equals(juego.noSeleccionado().position())))))
+        if ((game.at(7,10).equals(juego.seleccionado().position()) or game.at(7,10).equals(juego.noSeleccionado().position())) and 
+            ((game.at(9,10).equals(juego.seleccionado().position()) or game.at(9,10).equals(juego.noSeleccionado().position()))))
             {
-            	//self.abrir()
-            	//game.schedule(2000,{gestorNiveles.cargarSiguienteNivel()})
-            	gestorNiveles.cargarSiguienteNivel()
+            	self.abrir()
+            	game.schedule(2000,{gestorNiveles.cargarSiguienteNivel()})
+            	// gestorNiveles.cargarSiguienteNivel()
             }
       
     }
@@ -87,11 +88,14 @@ class Telarana inherits Visual
 {
 	var position
 	
+	method position() = position
 	method image() = "assets/telarania.png"
 	override method puedePisarte(_) = true
 	override method esEnemigo() = true
 	method eliminate() {
-		game.removeVisual(self)}
+		game.removeVisual(self)
+		// game.removeTickEvent("atraparTelarania")
+		}
 	method atraparPinguino() {
 		const objetosDeLaCelda = game.getObjectsIn(position).filter({o => o.image().startsWith("pinguino")})
 		objetosDeLaCelda.forEach({o => o.eliminate()}) 

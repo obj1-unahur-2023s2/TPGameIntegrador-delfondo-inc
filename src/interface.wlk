@@ -17,6 +17,7 @@ object gestorNiveles{
 			nivelActual = nivelActual.siguienteNivel()
 			nivelActualNumero++
 			gestorDeSonido.pararMusica()
+			corazon.cerrar()
 			nivelActual.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))	
 		}
 		else{
@@ -32,6 +33,9 @@ class Nivel {
 	var property corazonGanador = null
 	var property telaranias = []
 	var property aranias = []
+	var elementos = []
+	
+	method elementos() = elementos
 	
 	method posicionX(registro) = registro.first()
 	method posicionY(registro) = registro.last()
@@ -43,9 +47,15 @@ class Nivel {
 	}
 	method agregarCorazon(ubicacion){
 		game.addVisualIn(corazon, game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
+		game.onTick(3000,"verificarCorazon", {=> corazon.verificar()})
 	}
 	method agregarTelarania(ubicacion){
-		game.addVisualIn(new Telarana(position = game.at(self.posicionX(ubicacion),self.posicionY(ubicacion))), game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
+		const telarania = new Telarana(position = game.at(self.posicionX(ubicacion),self.posicionY(ubicacion)))
+		juego.agregarTelaranias(telarania)
+	}
+	method agregarArania(ubicacion){
+		const arania = new Arania(position = game.at(self.posicionX(ubicacion),self.posicionY(ubicacion)),direccion=abajo)
+		juego.agregarEnemigos(arania)
 	}
 	method construirNivel(){
 		game.clear()
@@ -57,7 +67,8 @@ class Nivel {
 		(1..10).forEach({ i => marco.add([16,i]) })
 		bloques.forEach({ubicacion=>self.agregarBloque(ubicacion)})
 		marco.forEach({ubicacion=>self.agregarPared(ubicacion)})
-		telaranias.forEach({ubicacion=>self.agregarTelarania(ubicacion)})
+		telaranias.forEach({ubicacion=>	self.agregarTelarania(ubicacion)})
+		aranias.forEach({ubicacion=> self.agregarArania(ubicacion)})								
 		self.agregarCorazon(corazonGanador)
 	}
 	
@@ -69,7 +80,6 @@ class Nivel {
 		tablero.nivelDato(nombre)
 		tablero.iniciar()
 		juego.cargarPersonajes(per1,per2)
-		juego.agregarEnemigos(juego.arania())
 		juego.cargarControles()
 		self.volverAlMenu()
 	}
@@ -155,7 +165,7 @@ const nivel1 = new Nivel(
 				[14,2],[14,4],[14,6],[14,8],[14,9],[15,4],[15,9]],
 	corazonGanador = [8,10],
 	telaranias = null,
-	aranias = [6,7]
+	aranias = [[6,7]]
 )
 
 const nivel2 = new Nivel(
@@ -169,7 +179,7 @@ const nivel2 = new Nivel(
 				[14,2],[14,4],[14,6],[14,8],[14,9],[15,2],[15,6]],
 	corazonGanador = [8,10],
 	telaranias = [[1,3],[1,7],[3,5],[7,7],[9,5],[15,7]],
-	aranias = [[6,7],[6,8]]
+	aranias = [[6,7],[10,5]]
 )
 
 const nivel3 = new Nivel(
