@@ -18,9 +18,6 @@ object juego {
 	//Acá cuando el jugador seleccione el pinguino, se guarda esa instancia que es personaje y la del otro pinguino que no lo es. 
 	var property seleccionado //= //pinguinoVerdeCh
 	var property noSeleccionado //= pinguinoRosa
-	const arania = new Arania(position=game.at(6,7),direccion=abajo)
-	
-	method arania() = arania
 	
 method cargarPersonajes(p1,p2)
     {
@@ -32,13 +29,13 @@ method cargarPersonajes(p1,p2)
 	
 	method agregarEnemigos(enemigo) {
         enemigo.imprimir()
-        game.onTick(1000,"arañaMov", {=> enemigo.movete()})
-        game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
+        game.onTick(1000,enemigo.nombre() + "1", {=> enemigo.movete()})
+        game.onTick(100,enemigo.nombre(), {=> enemigo.atraparPinguino()})
     }
     
     method agregarTelaranias(telarania) {
     	telarania.imprimir()
-    	// game.onTick(100,"atraparTelarania", {=> telarania.atraparPinguino()})
+    	game.onTick(100,telarania.nombre(), {=> telarania.atraparPinguino()})
     }
 	
 	method cargarControles(){
@@ -55,7 +52,7 @@ method cargarPersonajes(p1,p2)
     
 	method ganar(){
 		game.clear()
-		
+		gestorDeSonido.pararMusica()
 		gestorDeSonido.sonidoGanar()
 		imagenGanadora.mostrar()
 		game.schedule(10000,{game.stop()})

@@ -11,7 +11,7 @@ describe "Binary Land" {
 	const pared = new Pared()
 	const pinguinoVerde = new Pinguino(position=game.at(1,1), direccion=abajo, color="Verde", esPersonaje=true)
 	const pinguinoRosa = new Pinguino(position=game.at(1,1), direccion=abajo, color="Rosa", esPersonaje=false)
-	const arania = new Arania(position=game.at(1,0),direccion=abajo)
+	const arania = new Arania(position=game.at(1,0),direccion=abajo,nombre="arania")
 	
 	method initialize(){
 		juego.seleccionado(pinguinoVerde)

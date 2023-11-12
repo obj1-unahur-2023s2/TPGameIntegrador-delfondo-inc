@@ -49,14 +49,6 @@ class Nivel {
 		game.addVisualIn(corazon, game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
 		game.onTick(3000,"verificarCorazon", {=> corazon.verificar()})
 	}
-	method agregarTelarania(ubicacion){
-		const telarania = new Telarana(position = game.at(self.posicionX(ubicacion),self.posicionY(ubicacion)))
-		juego.agregarTelaranias(telarania)
-	}
-	method agregarArania(ubicacion){
-		const arania = new Arania(position = game.at(self.posicionX(ubicacion),self.posicionY(ubicacion)),direccion=abajo)
-		juego.agregarEnemigos(arania)
-	}
 	method construirNivel(){
 		game.clear()
 		const marco = []
@@ -67,8 +59,8 @@ class Nivel {
 		(1..10).forEach({ i => marco.add([16,i]) })
 		bloques.forEach({ubicacion=>self.agregarBloque(ubicacion)})
 		marco.forEach({ubicacion=>self.agregarPared(ubicacion)})
-		telaranias.forEach({ubicacion=>	self.agregarTelarania(ubicacion)})
-		aranias.forEach({ubicacion=> self.agregarArania(ubicacion)})								
+		telaranias.forEach({telarania=>	juego.agregarTelaranias(telarania)})
+		aranias.forEach({arania=> juego.agregarEnemigos(arania)})								
 		self.agregarCorazon(corazonGanador)
 	}
 	
@@ -99,6 +91,8 @@ object menu
     method cargar()
     {
         game.clear()
+        gestorNiveles.nivelActualNumero(1)
+        gestorNiveles.nivelActual(nivel1)
         game.addVisual(self)
         keyboard.up().onPressDo{ self.subir() }
         keyboard.down().onPressDo{ self.bajar() }
@@ -165,7 +159,7 @@ const nivel1 = new Nivel(
 				[14,2],[14,4],[14,6],[14,8],[14,9],[15,4],[15,9]],
 	corazonGanador = [8,10],
 	telaranias = null,
-	aranias = [[6,7]]
+	aranias = [arania1]
 )
 
 const nivel2 = new Nivel(
@@ -178,8 +172,8 @@ const nivel2 = new Nivel(
 				[11,4],[11,8],[12,2],[12,4],[12,6],[12,7],[12,8],[12,9],[13,4],[13,8],
 				[14,2],[14,4],[14,6],[14,8],[14,9],[15,2],[15,6]],
 	corazonGanador = [8,10],
-	telaranias = [[1,3],[1,7],[3,5],[7,7],[9,5],[15,7]],
-	aranias = [[6,7],[10,5]]
+	telaranias = [telarania1,telarania2,telarania3,telarania4,telarania5,telarania6],
+	aranias = [arania2,arania3]
 )
 
 const nivel3 = new Nivel(
@@ -192,7 +186,28 @@ const nivel3 = new Nivel(
 		[12,2],[12,3],[12,4],[12,6],[12,7],[12,8],[12,9],[13,4],[14,1],[14,2],[14,4],
 		[14,6],[14,8],[14,9],[15,6],[15,9]],
 	corazonGanador = [8,10],
-	telaranias = [[1,3],[1,7],[1,8],[1,9],[2,5],[3,2],[3,8],[5,5],[5,10],[7,8],
-				 [9,3],[9,7],[11,5],[14,3],[15,7]],
-	aranias = null
+	telaranias = [telarania7,telarania8,telarania9,telarania10,telarania11,telarania12,telarania13,
+				  telarania14],
+	aranias = [arania4,arania5]
 )
+
+const arania1 = new Arania(position=game.at(6,7),direccion=abajo,nombre="arania1")
+const arania2 = new Arania(position=game.at(5,6),direccion=abajo,nombre="arania2")
+const arania3 = new Arania(position=game.at(11,5),direccion=abajo,nombre="arania3")
+const arania4 = new Arania(position=game.at(4,7),direccion=abajo,nombre="arania4")
+const arania5 = new Arania(position=game.at(12,5),direccion=abajo,nombre="arania5")
+
+const telarania1 = new Telarana(position=game.at(1,3),nombre="telarania1")
+const telarania2 = new Telarana(position=game.at(1,7),nombre="telarania2")
+const telarania3 = new Telarana(position=game.at(3,5),nombre="telarania3")
+const telarania4 = new Telarana(position=game.at(7,7),nombre="telarania4")
+const telarania5 = new Telarana(position=game.at(9,5),nombre="telarania5")
+const telarania6 = new Telarana(position=game.at(15,7),nombre="telarania6")
+const telarania7 = new Telarana(position=game.at(1,8),nombre="telarania7")
+const telarania8 = new Telarana(position=game.at(3,8),nombre="telarania11")
+const telarania9 = new Telarana(position=game.at(5,5),nombre="telarania12")
+const telarania10 = new Telarana(position=game.at(5,10),nombre="telarania13")
+const telarania11 = new Telarana(position=game.at(7,8),nombre="telarania14")
+const telarania12 = new Telarana(position=game.at(9,3),nombre="telarania15")
+const telarania13 = new Telarana(position=game.at(9,7),nombre="telarania16")
+const telarania14 = new Telarana(position=game.at(11,5),nombre="telarania17")

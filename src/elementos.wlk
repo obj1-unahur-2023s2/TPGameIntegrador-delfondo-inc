@@ -87,14 +87,16 @@ class Bloque inherits Visual
 class Telarana inherits Visual
 {
 	var position
+	var nombre
 	
+	method nombre() = nombre
 	method position() = position
 	method image() = "assets/telarania.png"
 	override method puedePisarte(_) = true
 	override method esEnemigo() = true
 	method eliminate() {
 		game.removeVisual(self)
-		// game.removeTickEvent("atraparTelarania")
+		game.removeTickEvent(nombre)
 		}
 	method atraparPinguino() {
 		const objetosDeLaCelda = game.getObjectsIn(position).filter({o => o.image().startsWith("pinguino")})

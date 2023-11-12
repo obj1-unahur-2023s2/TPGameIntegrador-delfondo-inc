@@ -98,9 +98,11 @@ class Pinguino inherits Personaje {
 class Arania inherits Personaje {
 	
 	var property image = "arania.png"
+	var nombre
 	
 	override method esEnemigo() = true
 	override method puedePisarte(_) = true
+	method nombre() = nombre
 	
 	method movete() {
 		const numDir = [1,2,3,4].anyOne()
@@ -122,8 +124,8 @@ class Arania inherits Personaje {
 	}
 	override method eliminate() {
 		game.removeVisual(self)
-		game.removeTickEvent("arañaMov")
-		game.removeTickEvent("arañaAtaque")
+		game.removeTickEvent(nombre + "1")
+		game.removeTickEvent(nombre)
 	}
 	method atraparPinguino() {
 		const objetosDeLaCelda = game.getObjectsIn(position).filter({o => o.image().startsWith("pinguino")})
