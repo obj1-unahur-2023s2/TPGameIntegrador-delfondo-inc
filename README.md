@@ -42,7 +42,6 @@
 	Telarañas que detienen nuestro avance.
 
 ## Otros
-
-- Curso/Facultad
-- Versión de wollok
-- Una vez terminado, no tenemos problemas en que el repositorio sea público / queremos manternerlo privado
+Version 3.0.0
+Programación con objetos I S2 / UNAHUR 2023
+Una vez terminado, no tenemos problemas en que el repositorio sea público
