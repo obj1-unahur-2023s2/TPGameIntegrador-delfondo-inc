@@ -3,10 +3,8 @@
 
 ## Equipo de desarrollo
 
-(completar nombres formales)
-
 - Herrera Erik 
-- Tabaka Luca 
+- Tabaka Luca Uriel
 - Di Pietro Leandro 
 - Nuñez Ariel 
 - Calderon Carlos
