@@ -12,8 +12,11 @@
 - Calderon Carlos
 
 ## Capturas
+![menumalon](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/8bbc6eed-f09c-451a-9194-6499e412cf45)
 
-(agregar)
+![control](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/d7fdff7b-4f19-429f-80b6-d05387658acc)
+
+![pantallaGanar](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/5bed441d-5471-4bd3-baeb-e9bb3e2afb9c)
 
 ## Reglas de Juego / Instrucciones
 
