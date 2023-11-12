@@ -6,12 +6,12 @@ object gestorDeSonido{
 		sonando = soundProducer.sound("assets/stageTheme.mp3")
 		sonando.play()
 		sonando.shouldLoop(true)
-		sonando.volume(0.0)
+		sonando.volume(0.7)
 	}
 	method sonidoCursor(){
 		sonando = soundProducer.sound("assets/Move.mp3")
 		sonando.play()
-		sonando.volume(0.5)
+		sonando.volume(0.7)
 	}
 	
 	method sonidoActivarCorazon(){
@@ -23,7 +23,7 @@ object gestorDeSonido{
 	method sonidoPerder(){
 		sonando = soundProducer.sound("assets/perderNivel.mp3")
 		sonando.play()
-		sonando.volume(0.0)
+		sonando.volume(0.7)
 	}
 	
 	method sonidoControles(){
@@ -35,7 +35,7 @@ object gestorDeSonido{
 	method sonidoGanar(){
 		sonando = soundProducer.sound("assets/ganarNivel.mp3")
 		sonando.play()
-		sonando.volume(0.0)
+		sonando.volume(0.7)
 	}
 	method pararMusica(){
 		sonando.stop()

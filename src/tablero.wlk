@@ -9,8 +9,8 @@ object tablero
 	const nivel = new NivelTabla()
 	
 	method nivelDato(nuevo){ nivel.inicializar(nuevo) }
-	
 	method sumarPuntaje(numero){ puntaje.sumar(numero) }
+	method reiniciarScore(){puntaje.reiniciar()}
 	method iniciar()
 	{
 		puntaje.imprimir()
@@ -25,6 +25,7 @@ object tablero
 		puntaje.sumar(tiempo.tiempo().get(2).num()*1)
 	}
 	method estaEnCero() = tiempo.cero()
+	method imprimirTodo(){puntaje.imprimir() tiempo.imprimir() nivel.imprimir()}
 }
 
 class Puntaje inherits Visual
@@ -36,6 +37,10 @@ class Puntaje inherits Visual
 	
 	method position(){ return game.at(0,12) }
 	method image(){ return image }
+	method reiniciar(){
+		mostrar.forEach({p=>p.inicial(0)})
+		puntaje=0
+	}
 	
 	override method imprimir()
 	{
@@ -70,7 +75,6 @@ class Puntaje inherits Visual
 class Tiempo inherits Visual
 {
 	const tiempo = [ new Digito(posicion = game.at(9,12)), new Digito(posicion = game.at(10,12)), new Digito(posicion = game.at(11,12)) ]
-	
 	method image(){ return "tiempo.png" }
 	method position(){ return game.at(6,12) }
 	method cero(){ return tiempo.all({ d => d.num() == 0 }) }

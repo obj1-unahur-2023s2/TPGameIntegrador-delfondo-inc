@@ -19,7 +19,7 @@ object gestorNiveles{
 			nivelActualNumero++
 			corazon.cerrar()
 			nivelActual.iniciar(juego.seleccion(), juego.seleccion2())	
-			//nivelActual.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))
+	
 		}
 		else{
 			juego.ganar()
@@ -78,7 +78,7 @@ class Nivel {
 	}
 	
 	method volverAlMenu(){
-		keyboard.m().onPressDo{menu.cargar() gestorDeSonido.pararMusica()}
+		keyboard.m().onPressDo{menu.cargar() tablero.reiniciarScore() gestorDeSonido.pararMusica()}
 	}
 }
 
@@ -146,7 +146,7 @@ object control{
 	{
 		game.addVisual(self)
 		gestorDeSonido.sonidoControles()
-		keyboard.m().onPressDo{ menu.cargar() gestorDeSonido.pararMusica() }
+		keyboard.m().onPressDo{menu.cargar() gestorDeSonido.pararMusica()}
 	}
 }
 

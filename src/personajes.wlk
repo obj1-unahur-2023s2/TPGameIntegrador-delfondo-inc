@@ -34,7 +34,7 @@ class Pinguino inherits Personaje {
 	override method esEnemigo() = false
 	
 	method principal(){ esPersonaje = true }
-	
+	method noEsPrincipal(){ esPersonaje = false }
 	// Movimientos parametrizados.
 	method pasoEnX(direccionX) {
 		if(esPersonaje) {

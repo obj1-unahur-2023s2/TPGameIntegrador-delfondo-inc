@@ -5,19 +5,24 @@ import sonido.*
 import personajes.*
 import teclasPinguinos.*
 import movimientos.*
+import tablero.*
 
 object juego {
-	//Acá cuando el jugador seleccione el pinguino, se guarda esa instancia que es personaje y la del otro pinguino que no lo es. 
-	var property seleccionado //= //pinguinoVerdeCh
+	 
+	var property seleccionado 
 	var property noSeleccionado //= pinguinoRosa
 	var seleccion
 	var seleccion2
     
     method seleccion(){
-    	return new Pinguino(position=seleccion, direccion=abajo, color=seleccionado.color())
+    	var pingu= new Pinguino(position=seleccion, direccion=abajo, color=seleccionado.color())
+    	pingu.principal()
+    	return pingu
     }
      method seleccion2(){
-    	return new Pinguino(position=seleccion2, direccion=abajo, color=noSeleccionado.color())
+    	var pingu2= new Pinguino(position=seleccion2, direccion=abajo, color=noSeleccionado.color())
+    	pingu2.noEsPrincipal()
+    	return pingu2
     }
 method cargarPersonajes(p1,p2)
     {
@@ -48,7 +53,7 @@ method cargarPersonajes(p1,p2)
 	
     
 	 method volverAlMenu(){
-        keyboard.m().onPressDo{ menu.cargar() gestorDeSonido.pararMusica() }
+        keyboard.m().onPressDo{menu.cargar() tablero.reiniciarScore() gestorDeSonido.pararMusica()}
     }
 
     method estanAtrapados()= !game.allVisuals().any({o => o.image().startsWith("pinguino")})//
@@ -63,15 +68,17 @@ method cargarPersonajes(p1,p2)
     method ganar(){
         game.clear()
         imagenGanadora.mostrar()
+        tablero.imprimirTodo()
         self.volverAlMenu()
 
     }
 
     method perder(){
-        if(self.estanAtrapados()){
+        if(self.estanAtrapados() or tablero.estaEnCero()){
         game.clear()
         gestorDeSonido.pararMusica()
         imagenPerdedora.mostrar()
+        tablero.imprimirTodo()
         gestorDeSonido.sonidoPerder()
         self.volverAlMenu()
         }

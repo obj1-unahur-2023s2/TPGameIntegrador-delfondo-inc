@@ -17,8 +17,6 @@ object controles {
 		keyboard.space().onPressDo({juego.realizarAtaques()})
 		
 		keyboard.q().onPressDo({juego.girarPinguinos()})
-		
-		keyboard.l().onPressDo({gestorNiveles.cargarSiguienteNivel()})
 	}
 }
 	
