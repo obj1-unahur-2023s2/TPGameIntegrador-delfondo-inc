@@ -26,7 +26,7 @@ class Pinguino inherits Personaje {
 	var property estado = "Parado"
 	var property esPersonaje = false
 	var property image = "pinguino" + color + estado + direccion.toString() + ".png"
-		
+	method color()=color	
 	
 	// Esto es para que los pinguinos se puedan traspasar entre sí.
 	override method puedePisarte(_) = true

@@ -22,19 +22,20 @@ object juego {
 	
 	method arania() = arania
 	
-	method cargarPersonajes(p1,p2)
-	{
-		seleccionado=p1
-		noSeleccionado=p2
-		p1.imprimir()
-		p2.imprimir()
-	}
+method cargarPersonajes(p1,p2)
+    {
+        seleccionado=p1
+        noSeleccionado=p2
+        p1.imprimir()
+        p2.imprimir()
+    }
 	
 	method agregarEnemigos(enemigo) {
-		enemigo.imprimir()
-		game.onTick(1000,"arañaMov", {=> enemigo.movete()})
-		game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
-	}
+        enemigo.imprimir()
+        game.onTick(1000,"arañaMov", {=> enemigo.movete()})
+        game.onTick(100,"arañaAtaque", {=> enemigo.atraparPinguino()})
+        game.onTick(300,"verificarCorazon", {=> corazon.verificar()})
+    }
 	
 	method cargarControles(){
 		//const nivel = new Nivel()
@@ -47,11 +48,12 @@ object juego {
 		controles.controlesPinguinos()
 	}
 	
-	
+    
 	method ganar(){
 		game.clear()
-		game.addVisual("assets/prueba.png")
+		
 		gestorDeSonido.sonidoGanar()
+		imagenGanadora.mostrar()
 		game.schedule(10000,{game.stop()})
 		
 	}

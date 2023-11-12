@@ -16,10 +16,11 @@ object gestorNiveles{
 		if(!self.ultimoNivel()){
 			nivelActual = nivelActual.siguienteNivel()
 			nivelActualNumero++
+			gestorDeSonido.pararMusica()
 			nivelActual.iniciar(new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde", esPersonaje=true), new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa", esPersonaje=false))	
 		}
 		else{
-			//juego.ganar()
+			juego.ganar()
 		}
 	}
 }
@@ -62,6 +63,7 @@ class Nivel {
 	
 	method iniciar(per1,per2) 
 	{
+		game.clear()
 		gestorDeSonido.sonidoJuego()
 		self.construirNivel()
 		tablero.nivelDato(nombre)
@@ -79,53 +81,52 @@ class Nivel {
 
 object menu 
 {
-	var property image= "menugurin.png"
-	var property opciones=["menugurin.png","menumalon.png","menucontrol.png","menusalir.png"]
-	
-	var seleccion = 0
-	var property position= game.at(0,0)
-	
-	method cargar()
-	{
-		game.clear()
-		game.addVisual(self)
-		keyboard.up().onPressDo{ self.subir() }
-		keyboard.down().onPressDo{ self.bajar() }
-		keyboard.enter().onPressDo{ self.seleccionar() }
-	}
-	
-	method subir()
-	{
-		self.anterior(seleccion)
-		self.image(self.opciones().get(seleccion))
-		gestorDeSonido.sonidoCursor()
-	}
-	
-	method bajar()
-	{
-		self.siguiente(seleccion)
-		self.image(self.opciones().get(seleccion))
-		gestorDeSonido.sonidoCursor()
-	}
-	
-	method seleccionar()
-	{
-		const rosa =  new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa")
-		const verde = new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde")
-			
-		if (seleccion == 0)
-		{ 
-			verde.principal()
-			nivel1.iniciar(verde,rosa)
-		} else
-		if (seleccion == 1)
-		{ 
-			rosa.principal() 
-			nivel1.iniciar(rosa, verde)
-		} else
-		if (seleccion == 2){ control.cargar() }
-		else { game.stop() }
-	}
+    var property image= "menugurin.png"
+    var property opciones=["menugurin.png","menumalon.png","menucontrol.png","menusalir.png"]
+
+    var seleccion = 0
+    var property position= game.at(0,0)
+    method cargar()
+    {
+        game.clear()
+        game.addVisual(self)
+        keyboard.up().onPressDo{ self.subir() }
+        keyboard.down().onPressDo{ self.bajar() }
+        keyboard.enter().onPressDo{ self.seleccionar() }
+    }
+
+    method subir()
+    {
+        self.anterior(seleccion)
+        self.image(self.opciones().get(seleccion))
+        gestorDeSonido.sonidoCursor()
+    }
+
+    method bajar()
+    {
+        self.siguiente(seleccion)
+        self.image(self.opciones().get(seleccion))
+        gestorDeSonido.sonidoCursor()
+    }
+
+    method seleccionar()
+    {
+        const rosa =  new Pinguino(position=game.at(7,1), direccion=abajo, color="Rosa")
+        const verde = new Pinguino(position=game.at(9,1), direccion=abajo, color="Verde")
+
+        if (seleccion == 0)
+        { 
+            verde.principal()
+            nivel1.iniciar(verde,rosa)
+        } else
+        if (seleccion == 1)
+        { 
+            rosa.principal() 
+            nivel1.iniciar(rosa, verde)
+        } else
+        if (seleccion == 2){ control.cargar() }
+        else { game.stop() }
+    }
 	
 	method siguiente(num){ if(num == 3) { seleccion = 0 } else { seleccion += 1 } }
 	method anterior(num){ if(num == 0) { seleccion = 3 } else { seleccion -= 1 } }

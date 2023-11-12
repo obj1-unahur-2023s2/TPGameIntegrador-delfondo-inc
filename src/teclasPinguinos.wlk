@@ -1,7 +1,7 @@
 import wollok.game.*
 import movimientos.*
 import juego.*
-
+import interface.*
 //Controles para los pinguinos
 object controles {
 	
@@ -18,6 +18,7 @@ object controles {
 		
 		keyboard.q().onPressDo({juego.girarPinguinos()})
 		
+		keyboard.l().onPressDo({gestorNiveles.cargarSiguienteNivel()})
 	}
 }
 	
