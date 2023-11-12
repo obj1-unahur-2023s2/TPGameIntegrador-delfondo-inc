@@ -34,7 +34,7 @@
 * Hay obstaculos que deben superarse:
 	Una araña que deambula por el mapa.
 	Telarañas que detienen nuestro avance.
-
+* Cuando se gana o se pierde se debe presionar la tecla M para volver al menu.
 ## Otros
 * Version 3.0.0
 * Programación con objetos I S2 / UNAHUR 2023
