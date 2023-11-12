@@ -18,6 +18,9 @@
 
 ![pantallaGanar](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/5bed441d-5471-4bd3-baeb-e9bb3e2afb9c)
 
+![pantallaPerder](https://github.com/obj1-unahur-2023s2/TPGameIntegrador-delfondo-inc/assets/141874580/28bffb7e-f643-42e0-bed5-0e0ac4d76217)
+
+
 ## Reglas de Juego / Instrucciones
 
 * Primero ha de seleccionarse el protagonista entre 2 personajes.
