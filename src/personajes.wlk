@@ -105,21 +105,8 @@ class Arania inherits Personaje {
 	method nombre() = nombre
 	
 	method movete() {
-		const numDir = [1,2,3,4].anyOne()
 		
-		if(numDir == 1) {
-			direccion = arriba
-		}
-		if(numDir == 2) {
-			direccion = derecha
-		}
-		if(numDir == 3) {
-			direccion = abajo
-		}
-		if(numDir == 4) {
-			direccion = izquierda
-		}
-		
+		direccion = [arriba,derecha,abajo,izquierda].anyOne()
 		self.moverSiSePuedeA(direccion.siguiente(position))
 	}
 	override method eliminate() {
