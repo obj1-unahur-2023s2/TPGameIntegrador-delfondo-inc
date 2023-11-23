@@ -34,15 +34,9 @@ class Nivel {
 	var property corazonGanador = null
 	var property telaranias = []
 	var property aranias = []
-	var elementos = []
-	
-	method elementos() = elementos
 	
 	method posicionX(registro) = registro.first()
 	method posicionY(registro) = registro.last()
-	method agregarPared(ubicacion){
-		game.addVisualIn(new Pared(), game.at(self.posicionX(ubicacion),self.posicionY(ubicacion)))
-	}
 	method agregarBloque(ubicacion){
 		game.addVisualIn(new Bloque(), game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
 	}
@@ -50,20 +44,26 @@ class Nivel {
 		game.addVisualIn(corazon, game.at(self.posicionX(ubicacion), self.posicionY(ubicacion)) )
 		game.onTick(100,"verificarCorazon", {=> corazon.verificar()})
 	}
+	method cargarParedes()
+    {
+        (0..16).forEach({ i => game.addVisualIn( new Pared(), game.at(i,0) ) })
+        (1..11).forEach({ i => game.addVisualIn( new Pared(), game.at(0,i) ) })
+        (1..16).forEach({ i => game.addVisualIn( new Pared(), game.at(i,11) ) })
+        (1..10).forEach({ i => game.addVisualIn( new Pared(), game.at(16,i) ) })
+    }
 	method construirNivel(){
-		game.clear()
-		const marco = []
-		
-		(0..16).forEach({ i => marco.add([i,0]) })
-		(1..11).forEach({ i => marco.add([0,i]) })
-		(1..16).forEach({ i => marco.add([i,11]) })
-		(1..10).forEach({ i => marco.add([16,i]) })
-		bloques.forEach({ubicacion=>self.agregarBloque(ubicacion)})
-		marco.forEach({ubicacion=>self.agregarPared(ubicacion)})
-		telaranias.forEach({telarania=>	juego.agregarTelaranias(telarania)})
-		aranias.forEach({arania=> juego.agregarEnemigos(arania)})								
-		self.agregarCorazon(corazonGanador)
-	}
+        game.clear()
+
+        (0..16).forEach({ i => game.addVisualIn( new Pared(), game.at(i,0) ) })
+        (1..11).forEach({ i => game.addVisualIn( new Pared(), game.at(0,i) ) })
+        (1..16).forEach({ i => game.addVisualIn( new Pared(), game.at(i,11) ) })
+        (1..10).forEach({ i => game.addVisualIn( new Pared(), game.at(16,i) ) })
+
+        bloques.forEach({ubicacion=>self.agregarBloque(ubicacion)})
+        telaranias.forEach({telarania=>    juego.agregarTelaranias(telarania)})
+        aranias.forEach({arania=> juego.agregarEnemigos(arania)})
+        self.agregarCorazon(corazonGanador)
+    }
 	
 	method iniciar(per1,per2) 
 	{

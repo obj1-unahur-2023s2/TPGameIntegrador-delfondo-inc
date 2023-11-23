@@ -37,53 +37,21 @@ object corazon inherits Visual
             	self.abrir()
 				juego.pasarDeNivel()
             }
-      
-    }
+   		}
    }
-    
-    
-
 
 class Pared inherits Visual
 {
-	var image = "assets/pared.png"
+	const image = "assets/pared.png"
 	
 	method image() = image
-	method modo(num)
-	{
-		if(num == 2)
-		{
-			image = "assets/pared2.png"
-		} else
-		if(num ==3)
-		{
-			image = "assets/pared3.png"
-		} else {
-			image= "assets/pared4.png"
-		}
-		
-	}
 }
 
 class Bloque inherits Visual
 {
-	var image = "assets/bloque.png"
+	const image = "assets/bloque.png"
 	
 	method image() = image
-	method modo(num)
-	{
-		if(num == 2)
-		{
-			image = "assets/bloque2.png"
-		} else
-		if(num ==3)
-		{
-			image = "assets/bloque3.png"
-		} else {
-			image= "assets/bloque4.png"
-		}
-		
-	}
 }
 
 class Telarana inherits Visual
