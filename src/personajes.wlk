@@ -25,9 +25,10 @@ class Pinguino inherits Personaje {
 	const color
 	var property estado = "Parado"
 	var property esPersonaje = false
-	var property image = "pinguino" + color + estado + direccion.toString() + ".png"
-	method color()=color	
+	var frame = 1
 	
+	method color()=color	
+	override method image() = "pinguino" + color + estado + direccion.toString() + frame.toString() + ".png"
 	// Esto es para que los pinguinos se puedan traspasar entre sí.
 	override method puedePisarte(_) = true
 	
@@ -39,42 +40,40 @@ class Pinguino inherits Personaje {
 	method pasoEnX(direccionX) {
 		if(esPersonaje) {
 			direccion = direccionX
-			self.validarLugarLibre(direccion.siguiente(position))
 		}
 		else {
 			direccion = direccionX.opuesto()
-			self.validarLugarLibre(direccion.siguiente(position))
 		}
 		estado = "Moviendo"
+		self.validarLugarLibre(direccion.siguiente(position))
 		position = direccion.siguiente(position)
 		self.animacion(direccion)
 	}
 	
 	method pasoEnY(direccionY) {
 		direccion = direccionY
-		self.validarLugarLibre(direccion.siguiente(position))
 		estado = "Moviendo"
+		self.validarLugarLibre(direccion.siguiente(position))
 		position = direccion.siguiente(position)
 		self.animacion(direccion)
 	}
 	
 	method dateVuelta() {
 		direccion = direccion.opuesto()
-		self.image("pinguino" + color + estado + direccion.toString() + "2.png")
+		frame = 1
 	}
 	//Animacion de movimiento-subir imagenes correspondientes hacia cada direccion del rosa-
 		method animacion(dir){ 
 			direccion = dir
-			self.image("pinguino" + color + estado + direccion.toString() + ".png")
-			game.schedule(250,{=> self.image("pinguino" + color + estado + direccion.toString() + "2.png")})
+			frame = 2
+			game.schedule(250,{=> frame = 1})
 		}
 		
 	method animacionGolpes(dir){
 		direccion = dir
-		self.image("pinguino" + color + estado + direccion.toString() + ".png")
 		game.schedule(250,{=> 
 			estado ="Moviendo"
-			self.image("pinguino" + color + estado + direccion.toString() + "2.png")
+			frame = 1
 		})
 	}
 		

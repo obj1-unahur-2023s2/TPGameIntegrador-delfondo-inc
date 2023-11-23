@@ -69,6 +69,7 @@ method cargarPersonajes(p1,p2)
         game.clear()
         imagenGanadora.mostrar()
         tablero.imprimirTodo()
+        corazon.cerrar()
         self.volverAlMenu()
 
     }
