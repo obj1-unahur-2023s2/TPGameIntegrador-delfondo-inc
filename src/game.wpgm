@@ -1,0 +1,13 @@
+import wollok.game.*
+import elementos.*
+import personajes.*
+import interface.*
+
+program binaryLand {
+	game.width(17)
+	game.height(13)
+	game.cellSize(64)
+	game.boardGround("fondo.jpg")
+	menu.cargar()
+	game.start()
+}

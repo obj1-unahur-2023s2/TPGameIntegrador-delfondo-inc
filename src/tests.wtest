@@ -1,6 +1,46 @@
+import wollok.game.*
+import elementos.*
+import interface.*
+import juego.*
+import movimientos.*
+import tablero.*
+import personajes.*
 
-test "testX" {
-
-	assert.that(true)
-
+describe "Binary Land" {
+	
+	const pared = new Pared()
+	const pinguinoVerde = new Pinguino(position=game.at(1,1), direccion=abajo, color="Verde", esPersonaje=true)
+	const pinguinoRosa = new Pinguino(position=game.at(1,1), direccion=abajo, color="Rosa", esPersonaje=false)
+	const arania = new Arania(position=game.at(1,0),direccion=abajo,nombre="arania")
+	
+	method initialize(){
+		juego.seleccionado(pinguinoVerde)
+		juego.noSeleccionado(pinguinoRosa)
+	}
+	
+	test "Si un pinguino quiere moverse contra una pared, no puede"{
+		game.addVisualIn(pared,game.at(1,0))
+		game.addVisual(pinguinoVerde)
+		assert.throwsExceptionWithMessage("No puedo ir para ese lado",{pinguinoVerde.pasoEnY(abajo)})
+	}
+	test "Si un pinguino ataca una araña, esta desaparece"{
+		game.addVisual(pinguinoVerde)
+		juego.agregarEnemigos(arania)
+		juego.realizarAtaques()
+		assert.notThat(game.hasVisual(arania))
+	}
+	test "Los pinguinos se mueven en direcciones opuestas horizontalmente" {
+		game.addVisual(pinguinoVerde)
+		game.addVisual(pinguinoRosa)
+		juego.moverPinguinosEnX(derecha)
+		assert.equals(pinguinoVerde.position(),game.at(2,1))
+		assert.equals(pinguinoRosa.position(),game.at(0,1))
+	}
+	test "Si un pinguino choca con una araña, queda atrapado"{
+		game.addVisual(pinguinoVerde)
+		juego.agregarEnemigos(arania)
+		arania.moverSiSePuedeA(game.at(1,1))
+		arania.atraparPinguino()
+		assert.notThat(game.hasVisual(pinguinoVerde))
+	}
 }
